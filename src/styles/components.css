@@ -52,7 +52,7 @@
 }
 
 .password-field {
-  display: flex;
+  display: grid;
   gap: var(--spacing-md);
   align-items: stretch;
 }
