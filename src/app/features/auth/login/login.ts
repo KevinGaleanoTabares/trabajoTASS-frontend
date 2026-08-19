@@ -11,9 +11,19 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 export class Login {
   private readonly formBuilder = inject(FormBuilder);
 
+  passwordVisible = false;
+
   loginForm = this.formBuilder.group({
     correo: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
+  });
+  registerForm = this.formBuilder.group({
+    correo: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{9,}$/,
+    ),
+    ],
+    ],
+    confirmPassword: ['', Validators.required],
   });
 
   submit(): void {
@@ -27,5 +37,11 @@ export class Login {
       console.log(this.loginForm.getRawValue());
     }
   }
+
+   isInvalid(controlName: string): boolean {
+  const control = this.registerForm.get(controlName);
+
+  return Boolean(control?.invalid && control.touched);
+}
 
 }

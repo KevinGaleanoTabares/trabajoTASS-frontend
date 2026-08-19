@@ -29,11 +29,21 @@
 
       <label>
         Contraseña
-        <input
-          type="password"
-          formControlName="password"
-          placeholder="Ingresa tu contraseña"
-        />
+        <div class="password-field">
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              formControlName="password"
+              [class.input-error]="isInvalid('password')"
+              placeholder="Ingrese su contraseña"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="passwordVisible = !passwordVisible"
+            >
+              {{ passwordVisible ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
       </label>
 
       @if (
