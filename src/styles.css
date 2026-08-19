@@ -1,0 +1,44 @@
+@import './styles/variables.css';
+@import './styles/base.css';
+@import './styles/components.css';
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  padding: 0;
+  background: white;
+}
+
+.auth-panel {
+  flex: 1;
+  padding: var(--spacing-2xl);
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 50%;
+  min-width: 500px;
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-page::after {
+  content: '';
+  flex: 1;
+  background: linear-gradient(135deg, #0456F4 0%, #0191EE 50%, #00C9E9 100%);
+}
+
+@media (max-width: 640px) {
+  .auth-page {
+    flex-direction: column;
+  }
+
+  .auth-panel {
+    max-width: 100%;
+    min-width: auto;
+    padding: var(--spacing-xl);
+  }
+
+  .auth-page::after {
+    min-height: 300px;
+  }
+}

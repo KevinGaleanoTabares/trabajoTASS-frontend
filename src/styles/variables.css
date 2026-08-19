@@ -1,0 +1,113 @@
+:root {
+  --color-primary: #0456F4;
+  --color-primary-dark: #0340b8;
+  --color-primary-light: #0191EE;
+  --color-accent: #00C9E9;
+
+  --color-secondary: #2d3748;
+  --color-secondary-dark: #1a202c;
+
+  --color-success: #48bb78;
+  --color-error: #f56565;
+  --color-warning: #ed8936;
+  --color-info: #4299e1;
+
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #a0aec0;
+  --color-text-tertiary: #cbd5e0;
+  --color-text-light: #f7fafc;
+  --color-border: #4a5568;
+  --color-border-light: #2d3748;
+  --color-background: #1a202c;
+  --color-background-light: #2d3748;
+
+  /* TIPOGRAFÍA */
+  --font-family-base: Arial, Helvetica, sans-serif;
+  --font-family-mono: 'Courier New', monospace;
+
+  /* Tamaños de Fuente */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+
+  /* Pesos de Fuente */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ESPACIADO - Sistema de escala modular */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+
+  /* DIMENSIONES */
+  --input-height: 42px;
+  --button-height: 42px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+
+  /* BORDES */
+  --border-width-thin: 1px;
+  --border-width-normal: 2px;
+  --border-color: var(--color-border);
+  --border-style: solid;
+
+  /* SOMBRAS */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 24px rgb(20 45 62 / 12%);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.15);
+
+  /* TRANSICIONES */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+
+  /* Z-INDEX ESCALERA */
+  --z-index-dropdown: 100;
+  --z-index-modal: 200;
+  --z-index-tooltip: 300;
+  --z-index-notification: 400;
+
+  /* ANCHO MÁXIMO DE CONTENEDORES */
+  --max-width-sm: 440px;
+  --max-width-md: 640px;
+  --max-width-lg: 920px;
+  --max-width-xl: 1200px;
+
+  /* PADDING DE PÁGINA */
+  --page-padding-mobile: 16px;
+  --page-padding-desktop: 32px;
+}
+
+/* TEMAS OPCIONALES - para futuros temas oscuro/claro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text-primary: #f2f5f7;
+    --color-text-secondary: #a0b0ba;
+    --color-text-tertiary: #d0d8de;
+    --color-background: #1a1f26;
+    --color-background-light: #2a3139;
+    --color-border: #404a54;
+    --color-border-light: #505a64;
+  }
+}
+
+/* ACCESIBILIDAD - Respeta preferencias de movimiento del usuario */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+  }
+}

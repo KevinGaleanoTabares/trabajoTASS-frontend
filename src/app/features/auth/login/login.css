@@ -1,0 +1,16 @@
+/* LOGIN PANEL - Estilos específicos del componente de login */
+.login-panel form {
+  display: grid;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.login-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.login-panel label input {
+  width: 100%;
+}

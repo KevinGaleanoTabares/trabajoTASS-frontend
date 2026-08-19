@@ -1,0 +1,155 @@
+<main class="auth-page">
+  <section class="auth-panel">
+    <div class="brand">
+      <img src="../../../../assets/images/logo-tass.png" alt="TASS Logo" class="brand-logo" />
+      <div>
+        <h1>TASS</h1>
+        <p>Crear cuenta de usuario</p>
+      </div>
+    </div>
+
+    @if (registrationComplete) {
+      <div class="success-message">
+       Usuario creado correctamente. La cuenta está pendiente de activación.
+      </div>
+    }
+
+    @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      <div class="form-grid">
+        <label>
+          Nombres
+          <input type="text" formControlName="nombres" [class.input-error]="isInvalid('nombres')" />
+          @if (isInvalid('nombres')) {
+          <small class="field-error">Ingresa mínimo dos caracteres.</small>
+          }
+        </label>
+
+        <label>
+          Apellidos
+          <input type="text" formControlName="apellidos" [class.input-error]="isInvalid('apellidos')" />
+          @if (isInvalid('apellidos')) {
+            <small class="field-error">Ingresa mínimo dos caracteres.</small>
+          }
+        </label>
+
+        <label>
+          Tipo de documento
+           <select formControlName="tipoDocumento" [class.input-error]="isInvalid('tipoDocumento')">
+            <option value="">Selecciona una opción</option>
+            <option value="CC">CC</option>
+            <option value="CE">CE</option>
+            <option value="NIT">NIT</option>
+            <option value="PASAPORTE">Pasaporte</option>
+          </select>
+          @if (isInvalid('tipoDocumento')) {
+            <small class="field-error">Selecciona un tipo de documento.</small>
+          }
+        </label>
+
+        <label>
+          Número de documento
+          <input type="text" formControlName="numeroDocumento" [class.input-error]="isInvalid('numeroDocumento')" />
+          @if (isInvalid('numeroDocumento')) {
+            <small class="field-error">Ingresa un número de documento válido.</small>
+          }
+        </label>
+
+         <label>
+          Correo electrónico
+          <input type="email" formControlName="correo" [class.input-error]="isInvalid('correo')" />
+          @if (isInvalid('correo')) {
+            <small class="field-error">Ingresa un correo electrónico válido.</small>
+          }
+        </label>
+
+            <label>
+          Teléfono
+          <input type="tel" formControlName="telefono" [class.input-error]="isInvalid('telefono')" />
+          @if (isInvalid('telefono')) {
+            <small class="field-error">Ingresa un número de teléfono válido.</small>
+          }
+        </label>
+
+         <label>
+          Vinculación con TASS
+          <select formControlName="tipoVinculacion" [class.input-error]="isInvalid('tipoVinculacion')">
+            <option value="">Selecciona una opción</option>
+            <option value="empleado">Empleado</option>
+            <option value="administrativo">Administrativo</option>
+            <option value="directivo">Directivo</option>
+            <option value="proveedor">Proveedor</option>
+          </select>
+            @if (isInvalid('tipoVinculacion')) {
+            <small class="field-error">Selecciona una opción.</small>
+          }
+        </label>
+
+        <label>
+          Cargo
+          <input type="text" formControlName="cargo" [class.input-error]="isInvalid('cargo')" />
+          @if (isInvalid('cargo')) {
+            <small class="field-error">Ingresa un cargo válido.</small>
+          }
+        </label>
+
+        <label>
+          Contraseña
+          <div class="password-field">
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              formControlName="password"
+              [class.input-error]="isInvalid('password')"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="passwordVisible = !passwordVisible"
+            >
+              {{ passwordVisible ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+          @if (isInvalid('password')) {
+            <small class="field-error">
+              Mínimo 9 caracteres, mayúscula, minúscula, número y carácter especial.
+            </small>
+          }
+        </label>
+
+        <label>
+          Confirmar contraseña
+          <div class="password-field">
+            <input
+              [type]="confirmPasswordVisible ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              [class.input-error]="isInvalid('confirmPassword')"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="confirmPasswordVisible = !confirmPasswordVisible"
+            >
+              {{ confirmPasswordVisible ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+          @if (isInvalid('confirmPassword')) {
+            <small class="field-error">Confirma la contraseña.</small>
+          }
+        </label>
+      </div>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Creando usuario...' : 'Crear usuario' }}
+      </button>
+    </form>
+    <p class="auth-link">
+      ¿Ya tienes una cuenta?
+      <a routerLink="/login"> Iniciar sesión </a>
+    </p>
+  </section>
+</main>

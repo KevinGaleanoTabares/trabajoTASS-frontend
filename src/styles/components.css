@@ -1,0 +1,107 @@
+@import './variables.css';
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: var(--border-radius-md);
+  background: var(--color-primary);
+  color: var(--color-background);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.brand h1 {
+  color: #1a202c;
+  font-size: var(--font-size-2xl);
+  margin: 0;
+  font-weight: 700;
+}
+
+.brand p {
+  margin: var(--spacing-xs) 0 0 0;
+  color: #718096;
+  font-size: var(--font-size-sm);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-2xl);
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.password-field {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: stretch;
+}
+
+.password-field input {
+  flex: 1;
+  min-height: var(--input-height);
+}
+
+.password-toggle {
+  min-height: var(--button-height);
+  margin: 0;
+  padding: 0 var(--spacing-md);
+  background: white;
+  color: #0456F4;
+  border: var(--border-width-thin) solid #e2e8f0;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.password-toggle:hover:not(:disabled) {
+  background: #f7fafc;
+  border-color: #0456F4;
+}
+
+.input-error {
+  border-color: #f56565 !important;
+  background-color: rgba(245, 101, 101, 0.05);
+}
+
+.input-error:focus {
+  border-color: #f56565 !important;
+  outline-color: #f56565 !important;
+}
+
+.auth-link {
+  margin: var(--spacing-xl) 0 0 0;
+  text-align: center;
+  color: #4a5568;
+  font-size: var(--font-size-sm);
+}
+
+.auth-link a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.auth-link a:hover {
+  color: var(--color-primary-dark);
+}

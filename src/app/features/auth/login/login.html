@@ -1,0 +1,56 @@
+<main class="auth-page">
+  <section class="auth-panel login-panel">
+    <div class="brand">
+     <img src="assets/images/logo-tass.png" alt="TASS Logo" class="brand-logo">
+      <div>
+        <h1>TASS</h1>
+        <p>Iniciar sesión</p>
+      </div>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <label>
+        Correo electrónico
+        <input
+          type="email"
+          formControlName="correo"
+          placeholder="correo@tass.com"
+        />
+      </label>
+
+      @if (
+        loginForm.controls.correo.invalid &&
+        loginForm.controls.correo.touched
+      ) {
+        <small class="field-error">
+          Ingresa un correo electrónico válido.
+        </small>
+      }
+
+      <label>
+        Contraseña
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Ingresa tu contraseña"
+        />
+      </label>
+
+      @if (
+        loginForm.controls.password.invalid &&
+        loginForm.controls.password.touched
+      ) {
+        <small class="field-error">
+          La contraseña es obligatoria.
+        </small>
+      }
+
+      <button type="submit">Ingresar</button>
+    </form>
+
+    <p class="auth-link">
+      ¿Necesitas crear una cuenta?
+      <a routerLink="/registro">Crear usuario</a>
+    </p>
+  </section>
+</main>

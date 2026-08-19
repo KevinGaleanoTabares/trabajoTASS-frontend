@@ -1,0 +1,154 @@
+@import './variables.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: #1a202c;
+  background: white;
+  line-height: 1.6;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-weight: var(--font-weight-bold);
+  transition: all var(--transition-base);
+  background-color: var(--color-primary);
+  color: white;
+  width: 100%;
+}
+
+button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+input,
+select,
+textarea {
+  min-height: var(--input-height);
+  border: var(--border-width-thin) var(--border-style) #e2e8f0;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-md) var(--spacing-md);
+  transition: all var(--transition-base);
+  background-color: #f7fafc;
+  color: #1a202c;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: var(--border-width-normal) solid var(--color-primary);
+  outline-offset: var(--spacing-xs);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(4, 86, 244, 0.15);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+h1 { font-size: var(--font-size-2xl); }
+h2 { font-size: var(--font-size-xl); }
+h3 { font-size: var(--font-size-lg); }
+
+p {
+  margin: 0;
+  color: #4a5568;
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-lg);
+  color: #1a202c;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.field-error,
+.error-message {
+  display: block;
+  margin-top: var(--spacing-xs);
+  color: #c53030;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.error-message {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: #fed7d7;
+  border: var(--border-width-thin) solid #fc8181;
+  border-radius: var(--border-radius-sm);
+}
+
+.success-message {
+  display: block;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-lg);
+  color: #22543d;
+  background: #c6f6d5;
+  border: var(--border-width-thin) solid #9ae6b4;
+  border-radius: var(--border-radius-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.page-container {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--page-padding-desktop);
+  background: var(--color-background-light);
+}
+
+@media (max-width: 640px) {
+  .page-container {
+    padding: var(--page-padding-mobile);
+  }
+}
