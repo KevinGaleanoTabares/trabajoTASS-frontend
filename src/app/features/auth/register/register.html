@@ -24,7 +24,7 @@
       <div class="form-grid">
         <label>
           Nombres
-          <input type="text" formControlName="nombres" [class.input-error]="isInvalid('nombres')" />
+          <input type="text" formControlName="nombres" [class.input-error]="isInvalid('nombres')" placeholder="Ingrese sus nombres" />
           @if (isInvalid('nombres')) {
           <small class="field-error">Ingresa mínimo dos caracteres.</small>
           }
@@ -32,7 +32,7 @@
 
         <label>
           Apellidos
-          <input type="text" formControlName="apellidos" [class.input-error]="isInvalid('apellidos')" />
+          <input type="text" formControlName="apellidos" [class.input-error]="isInvalid('apellidos')" placeholder="Ingrese sus apellidos"/>
           @if (isInvalid('apellidos')) {
             <small class="field-error">Ingresa mínimo dos caracteres.</small>
           }
@@ -40,7 +40,7 @@
 
         <label>
           Tipo de documento
-           <select formControlName="tipoDocumento" [class.input-error]="isInvalid('tipoDocumento')">
+           <select formControlName="tipoDocumento" [class.input-error]="isInvalid('tipoDocumento')" placeholder="Selecciona una opción">
             <option value="">Selecciona una opción</option>
             <option value="CC">CC</option>
             <option value="CE">CE</option>
@@ -54,7 +54,7 @@
 
         <label>
           Número de documento
-          <input type="text" formControlName="numeroDocumento" [class.input-error]="isInvalid('numeroDocumento')" />
+          <input type="text" formControlName="numeroDocumento" [class.input-error]="isInvalid('numeroDocumento')" placeholder="Ingrese el número de documento"/>
           @if (isInvalid('numeroDocumento')) {
             <small class="field-error">Ingresa un número de documento válido.</small>
           }
@@ -62,7 +62,7 @@
 
          <label>
           Correo electrónico
-          <input type="email" formControlName="correo" [class.input-error]="isInvalid('correo')" />
+          <input type="email" formControlName="correo" [class.input-error]="isInvalid('correo')" placeholder="Ingrese su correo electrónico"/>
           @if (isInvalid('correo')) {
             <small class="field-error">Ingresa un correo electrónico válido.</small>
           }
@@ -70,7 +70,7 @@
 
             <label>
           Teléfono
-          <input type="tel" formControlName="telefono" [class.input-error]="isInvalid('telefono')" />
+          <input type="tel" formControlName="telefono" [class.input-error]="isInvalid('telefono')" placeholder="Ingrese su número de teléfono"/>
           @if (isInvalid('telefono')) {
             <small class="field-error">Ingresa un número de teléfono válido.</small>
           }
@@ -92,7 +92,7 @@
 
         <label>
           Cargo
-          <input type="text" formControlName="cargo" [class.input-error]="isInvalid('cargo')" />
+          <input type="text" formControlName="cargo" [class.input-error]="isInvalid('cargo')" placeholder="Ingrese su cargo"/>
           @if (isInvalid('cargo')) {
             <small class="field-error">Ingresa un cargo válido.</small>
           }
@@ -105,6 +105,7 @@
               [type]="passwordVisible ? 'text' : 'password'"
               formControlName="password"
               [class.input-error]="isInvalid('password')"
+              placeholder="Ingrese su contraseña"
             />
             <button
               type="button"
@@ -128,6 +129,7 @@
               [type]="confirmPasswordVisible ? 'text' : 'password'"
               formControlName="confirmPassword"
               [class.input-error]="isInvalid('confirmPassword')"
+              placeholder="Confirma tu contraseña"
             />
             <button
               type="button"
