@@ -55,7 +55,7 @@
         </small>
       }
 
-      <button type="submit">Ingresar</button>
+      <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
     </form>
 
     <p class="auth-link">

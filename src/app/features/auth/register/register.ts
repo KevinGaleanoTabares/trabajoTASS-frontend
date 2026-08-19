@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthServiceTs } from '../../../core/services/auth.service';
 import { RouterLink } from '@angular/router';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -40,7 +41,11 @@ export class Register {
   ],
 ],
     confirmPassword: ['', Validators.required],
-  });
+  },
+  {
+    validators: passwordMatchValidator,
+  },
+);
 
   submit(): void{
     this.registrationComplete = false;
@@ -52,11 +57,6 @@ export class Register {
     }
 
     const { confirmPassword, ...requestData } = this.registerForm.getRawValue();
-
-    if (requestData.password !== confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden.';
-      return;
-    }
 
     this.isSubmitting = true;
     this.authService.register({
@@ -88,3 +88,19 @@ export class Register {
   return Boolean(control?.invalid && control.touched);
 }
 }
+
+export const passwordMatchValidator: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+
+  const password = control.get('password')?.value;
+  const confirm = control.get('confirmPassword')?.value;
+
+  if (!password || !confirm) {
+    return null;
+  }
+
+  return password === confirm
+    ? null
+    : { passwordMismatch: true };
+};

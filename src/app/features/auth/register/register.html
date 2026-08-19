@@ -128,7 +128,9 @@
             <input
               [type]="confirmPasswordVisible ? 'text' : 'password'"
               formControlName="confirmPassword"
-              [class.input-error]="isInvalid('confirmPassword')"
+              [class.input-error]="isInvalid('confirmPassword') ||
+              (registerForm.hasError('passwordMismatch')) &&
+              registerForm.get('confirmPassword')?.touched"
               placeholder="Confirma tu contraseña"
             />
             <button
@@ -139,13 +141,20 @@
               {{ confirmPasswordVisible ? 'Hide Password' : 'Mostrar Contraseña' }}
             </button>
           </div>
+
+          @if (registerForm.hasError('passwordMismatch') &&
+          registerForm.get('confirmPassword')?.touched) {
+            <small class="field-error">
+              Las contraseñas no coinciden
+            </small>
+          }
           @if (isInvalid('confirmPassword')) {
             <small class="field-error">Confirma la contraseña.</small>
           }
         </label>
       </div>
 
-      <button type="submit" [disabled]="isSubmitting">
+      <button type="submit" [disabled]="registerForm.invalid || isSubmitting">
         {{ isSubmitting ? 'Creando usuario...' : 'Crear usuario' }}
       </button>
     </form>
