@@ -112,7 +112,7 @@
               class="password-toggle"
               (click)="passwordVisible = !passwordVisible"
             >
-              {{ passwordVisible ? 'Ocultar' : 'Mostrar' }}
+              {{ passwordVisible ? 'Hide Password' : 'Mostrar Contraseña' }}
             </button>
           </div>
           @if (isInvalid('password')) {
@@ -136,7 +136,7 @@
               class="password-toggle"
               (click)="confirmPasswordVisible = !confirmPasswordVisible"
             >
-              {{ confirmPasswordVisible ? 'Ocultar' : 'Mostrar' }}
+              {{ confirmPasswordVisible ? 'Hide Password' : 'Mostrar Contraseña' }}
             </button>
           </div>
           @if (isInvalid('confirmPassword')) {
