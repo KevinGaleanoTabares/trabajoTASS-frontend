@@ -22,3 +22,17 @@
     grid-template-columns: 1fr;
   }
 }
+
+.password-after-provider {
+  grid-row: 7;
+}
+
+.empresa-nit {
+  grid-column: 2;
+}
+
+.field-success {
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 500;
+}

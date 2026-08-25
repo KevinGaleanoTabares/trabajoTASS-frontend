@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { environment } from '../../../enviroments/enviroment';
 
 export interface RegisterRequest {
   nombres: string;
@@ -11,8 +12,28 @@ export interface RegisterRequest {
   telefono: string;
   tipoVinculacion: string;
   cargo: string;
+  empresaProveedora?: string;
   password: string;
   confirmPassword: string;
+}
+
+export interface LoginRequest {
+  correo: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  data: {
+    token: string;
+    user: {
+      id: string;
+      nombres: string;
+      correo: string;
+      estado: string;
+    };
+  };
 }
 
 export interface RegisterResponse {
@@ -32,9 +53,44 @@ export interface RegisterResponse {
 
 export class AuthServiceTs {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/api/auth';
+  private readonly apiUrl = environment.apiUrl;
 
   register(data: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, data);
   }
+
+  login(data: LoginRequest): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/login`, data)
+      .pipe(
+        tap(response => {
+          localStorage.setItem('token', response.data.token);
+        })
+      );
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  getRole(): string | null {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])); //Atob lo decodifica, token.split('.')[1] obtiene la segunda parte del token que es el payload
+
+      return payload.rol ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+  }
+
 }

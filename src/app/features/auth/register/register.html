@@ -8,17 +8,6 @@
       </div>
     </div>
 
-    @if (registrationComplete) {
-      <div class="success-message">
-       Usuario creado correctamente. La cuenta está pendiente de activación.
-      </div>
-    }
-
-    @if (errorMessage) {
-      <div class="error-message">
-        {{ errorMessage }}
-      </div>
-    }
 
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
       <div class="form-grid">
@@ -90,6 +79,33 @@
           }
         </label>
 
+        @if (registerForm.get('tipoVinculacion')?.value === 'proveedor') {
+        <label class="empresa-nit">
+          NIT de la empresa
+
+          <input type="text" formControlName="empresaProveedora" (blur)="buscarEmpresa()" [class.input-error]="isInvalid('empresaProveedora')"
+            placeholder="Ingrese el NIT de la empresa" />
+
+            @if (registerForm.get('empresaProveedora')?.errors?.['backend']) {
+            <small class="field-error">
+              {{ registerForm.get('empresaProveedora')?.errors?.['backend'] }}
+            </small>
+            }
+
+            @if (empresaEncontrada) {
+            <small class="field-success">
+              Empresa encontrada: {{ empresaEncontrada }}
+            </small>
+            }
+
+          @if (isInvalid('empresaProveedora')) {
+          <small class="field-error">
+            Ingresa un NIT válido.
+          </small>
+          }
+        </label>
+        }
+
         <label>
           Cargo
           <input type="text" formControlName="cargo" [class.input-error]="isInvalid('cargo')" placeholder="Ingrese su cargo"/>
@@ -98,7 +114,7 @@
           }
         </label>
 
-        <label>
+        <label [class.password-after-provider]="registerForm.get('tipoVinculacion')?.value === 'proveedor'">
           Contraseña
           <div class="password-field">
             <input
@@ -122,7 +138,7 @@
           }
         </label>
 
-        <label>
+        <label [class.password-after-provider]="registerForm.get('tipoVinculacion')?.value === 'proveedor'">
           Confirmar contraseña
           <div class="password-field">
             <input

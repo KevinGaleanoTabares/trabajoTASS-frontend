@@ -1,0 +1,13 @@
+services:
+  server-desarrollo:
+    profiles: [ "desarrollo" ]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      production: false
+      PORT: 11001
+    container_name: trabajoTASSfrontend
+    ports:
+      - "11001:11001"
+# COMO SEPARAR LOS ENTORNOS PRE PRODUCTIVO Y PRUEBAS EN DOCKERFILE

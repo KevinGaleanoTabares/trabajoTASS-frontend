@@ -1,6 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthServiceTs } from '../../../core/services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SweetAlertService } from '../../../core/services/sweet-alert-service'
 
 @Component({
   selector: 'app-login',
@@ -10,6 +13,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 })
 export class Login {
   private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthServiceTs);
+  private readonly sweetAlert = inject(SweetAlertService);
 
   passwordVisible = false;
 
@@ -19,26 +25,50 @@ export class Login {
   });
   registerForm = this.formBuilder.group({
     correo: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()]).{9,}$/,
+    password: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_!@#$%^&*()]).{9,}$/,
     ),
     ],
     ],
     confirmPassword: ['', Validators.required],
   });
 
-  submit(): void {
-    if (this.loginForm.invalid) {
-      alert('Formulario inválido. Por favor, corrige los errores antes de enviar.');
-      this.loginForm.markAllAsTouched();
-      return;
-    }
-    if (this.loginForm.valid) {
-      alert('Formulario enviado con éxito. Ver consola para ver los datos.')
-      console.log(this.loginForm.getRawValue());
-    }
+submit(): void {
+
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
   }
 
-   isInvalid(controlName: string): boolean {
+  this.authService.login({
+    correo: this.loginForm.getRawValue().correo ?? '',
+    password: this.loginForm.getRawValue().password ?? '',
+  }).subscribe({
+    next: () => {
+      this.sweetAlert.success('Inicio de sesión exitoso');
+
+      const rol = this.authService.getRole();
+
+      if (rol === 'superAdmin') {
+        this.router.navigate(['/super-admin']);
+      } else if (rol === 'admin') {
+        this.router.navigate(['/admin']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+    },
+
+    error: (error: HttpErrorResponse) => {
+      const mensaje =
+        error.error?.message ??
+        'Datos no válidos';
+
+      this.sweetAlert.error(mensaje);
+    }
+  });
+
+}
+
+  isInvalid(controlName: string): boolean {
   const control = this.registerForm.get(controlName);
 
   return Boolean(control?.invalid && control.touched);
