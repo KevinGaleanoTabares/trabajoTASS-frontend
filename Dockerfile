@@ -1,31 +1,24 @@
+ARG NODE_VERSION=22-alpine
 
-# syntax=docker/dockerfile:1
+FROM node:${NODE_VERSION} AS build
+ARG FRONTEND_ENV=production
+WORKDIR /app
 
-ARG NODE_VERSION=22.23.2
-
-FROM node:${NODE_VERSION}-alpine
-
-
-WORKDIR /src/app
-
-# Copiar package files primero
 COPY package*.json ./
+RUN npm ci
 
-# Instalar dependencias
-RUN npm install
-
-# Copiar proyecto
 COPY . .
+RUN npx ng build --configuration=${FRONTEND_ENV}
 
-# Crear directorio de caché y darle permisos al usuario node
-RUN mkdir -p .angular/cache \
-    && chown -R node:node /src/app
+FROM node:${NODE_VERSION} AS runtime
+WORKDIR /app
+ENV NODE_ENV=development
+ENV PORT=11001
 
-# Exponer puerto
-EXPOSE 11001
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY --from=build /app/dist ./dist
 
-# Usuario no root
 USER node
-
-# Comando inicio
-CMD ["npm", "run", "start"]
+EXPOSE 11001
+CMD ["npm", "run", "serve:ssr:trabajoTASSfrontend"]

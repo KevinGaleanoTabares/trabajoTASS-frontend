@@ -43,6 +43,38 @@
             }
           },
           "configurations": {
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/enviroments/enviroment.ts",
+                  "with": "src/enviroments/enviroment.development.ts"
+                }
+              ]
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/enviroments/enviroment.ts",
+                  "with": "src/enviroments/enviroment.local.ts"
+                }
+              ]
+            },
+            "preprod": {
+              "fileReplacements": [
+                {
+                  "replace": "src/enviroments/enviroment.ts",
+                  "with": "src/enviroments/enviroment.preprod.ts"
+                }
+              ]
+            },
             "production": {
               "budgets": [
                 {
@@ -57,11 +89,6 @@
                 }
               ],
               "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -74,6 +101,12 @@
             },
             "development": {
               "buildTarget": "trabajoTASSfrontend:build:development"
+            },
+            "local": {
+              "buildTarget": "trabajoTASSfrontend:build:local"
+            },
+            "preprod": {
+              "buildTarget": "trabajoTASSfrontend:build:preprod"
             }
           },
           "defaultConfiguration": "development"
