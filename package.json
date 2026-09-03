@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve  --port 11001",
+    "start:local": "ng serve  --port 11001 --configuration local",
+    "start:development": "ng serve  --port 11001 --configuration development",
     "build": "ng build  --",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

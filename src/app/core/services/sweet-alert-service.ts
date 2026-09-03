@@ -24,12 +24,12 @@ export class SweetAlertService {
     });
   }
 
-  warning(mensaje: string) {
-    return Swal.fire({
+  warning(message: string): void {
+    Swal.fire({
       icon: 'warning',
-      title: 'Advertencia',
-      text: mensaje,
-      confirmButtonText: 'Aceptar'
+      title: 'Cuenta no activada',
+      text: message,
+      confirmButtonText: 'Entendido',
     });
   }
 }

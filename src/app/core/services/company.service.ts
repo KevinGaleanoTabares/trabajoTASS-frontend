@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../enviroments/enviroment';
 
 export interface CompanyResponse {
   success: boolean;
@@ -16,7 +17,7 @@ export interface CompanyResponse {
 })
 export class CompanyService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/api/company';
+  private readonly apiUrl = `${environment.apico}/company`;
 
   findByNit(nit: string): Observable<CompanyResponse> {
     return this.http.get<CompanyResponse>(`${this.apiUrl}/nit/${nit}`);

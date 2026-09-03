@@ -2,6 +2,15 @@
 @import './styles/base.css';
 @import './styles/components.css';
 
+.auth-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--spacing-xl) 0;
+  box-sizing: border-box;
+}
+
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -27,18 +36,47 @@
   background: linear-gradient(135deg, #0456F4 0%, #0191EE 50%, #00C9E9 100%);
 }
 
+/* =========================
+   TABLET
+   ========================= */
+
+  @media (max-width: 1024px) {
+
+    .auth-panel {
+      min-width: 450px;
+      padding: var(--spacing-xl);
+    }
+
+  }
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
 @media (max-width: 640px) {
+
+  .brand-logo {
+    width: 45%;
+    max-width: 160px;
+  }
+
   .auth-page {
     flex-direction: column;
+    min-height: 100vh;
   }
 
   .auth-panel {
     max-width: 100%;
-    min-width: auto;
-    padding: var(--spacing-xl);
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--spacing-xl) var(--page-padding-mobile);
   }
 
   .auth-page::after {
-    min-height: 300px;
+    min-height: 180px;
+    flex: none;
   }
+
 }

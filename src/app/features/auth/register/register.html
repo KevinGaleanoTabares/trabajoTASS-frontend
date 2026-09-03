@@ -1,13 +1,10 @@
 <main class="auth-page">
   <section class="auth-panel">
     <div class="brand">
-      <img src="../../../../assets/images/logo-tass.png" alt="TASS Logo" class="brand-logo" />
-      <div>
-        <h1>TASS</h1>
-        <p>Crear cuenta de usuario</p>
-      </div>
+      <img src="../../../../assets/images/tass.png" alt="TASS Logo" class="brand-logo" />
     </div>
 
+    <p class="letter-size">Crear cuenta de usuario</p>
 
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
       <div class="form-grid">
@@ -29,7 +26,7 @@
 
         <label>
           Tipo de documento
-           <select formControlName="tipoDocumento" [class.input-error]="isInvalid('tipoDocumento')" placeholder="Selecciona una opción">
+           <select formControlName="tipoDocumento" [class.input-error]="isInvalid('tipoDocumento')">
             <option value="">Selecciona una opción</option>
             <option value="CC">CC</option>
             <option value="CE">CE</option>
@@ -37,7 +34,7 @@
             <option value="PASAPORTE">Pasaporte</option>
           </select>
           @if (isInvalid('tipoDocumento')) {
-            <small class="field-error">Selecciona un tipo de documento.</small>
+            <small class="field-error">{{  getErrorMessage('tipoDocumento')  }}</small>
           }
         </label>
 
@@ -45,15 +42,19 @@
           Número de documento
           <input type="text" formControlName="numeroDocumento" [class.input-error]="isInvalid('numeroDocumento')" placeholder="Ingrese el número de documento"/>
           @if (isInvalid('numeroDocumento')) {
-            <small class="field-error">Ingresa un número de documento válido.</small>
+            <small class="field-error">{{ getErrorMessage('numeroDocumento') }}</small>
           }
         </label>
+
+        @if (authorizationError) {
+          <small class="field-error authorization-error">{{ authorizationError }}</small>
+        }
 
          <label>
           Correo electrónico
           <input type="email" formControlName="correo" [class.input-error]="isInvalid('correo')" placeholder="Ingrese su correo electrónico"/>
           @if (isInvalid('correo')) {
-            <small class="field-error">Ingresa un correo electrónico válido.</small>
+            <small class="field-error">{{ getErrorMessage('correo') }}</small>
           }
         </label>
 
@@ -107,10 +108,18 @@
         }
 
         <label>
-          Cargo
-          <input type="text" formControlName="cargo" [class.input-error]="isInvalid('cargo')" placeholder="Ingrese su cargo"/>
-          @if (isInvalid('cargo')) {
-            <small class="field-error">Ingresa un cargo válido.</small>
+          Cargos
+          <select formControlName="cargo">
+            <option value="">Seleccione un cargo</option>
+
+            @for (cargo of cargos; track cargo) {
+            <option [value]="cargo">
+              {{ cargo }}
+            </option>
+            }
+          </select>
+            @if (isInvalid('cargo')) {
+            <small class="field-error">Selecciona una opción.</small>
           }
         </label>
 
@@ -123,12 +132,21 @@
               [class.input-error]="isInvalid('password')"
               placeholder="Ingrese su contraseña"
             />
-            <button
-              type="button"
-              class="password-toggle"
-              (click)="passwordVisible = !passwordVisible"
-            >
-              {{ passwordVisible ? 'Hide Password' : 'Mostrar Contraseña' }}
+            <button type="button" class="password-toggle" (click)="passwordVisible = !passwordVisible"
+              [attr.aria-label]="passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+              @if (passwordVisible) {
+              <!-- Ojo cerrado -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 4.2A10.8 10.8 0 0 1 12 4c5 0 9.3 3.1 11 8a11.8 11.8 0 0 1-3.1 4.8M6.2 6.2C4.7 7.5 3.5 9.4 3 12c1.7 4.9 6 8 9 8 1 0 2-.2 2.9-.5" />
+              </svg>
+              } @else {
+              <!-- Ojo abierto -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              }
             </button>
           </div>
           @if (isInvalid('password')) {
@@ -149,12 +167,21 @@
               registerForm.get('confirmPassword')?.touched"
               placeholder="Confirma tu contraseña"
             />
-            <button
-              type="button"
-              class="password-toggle"
-              (click)="confirmPasswordVisible = !confirmPasswordVisible"
-            >
-              {{ confirmPasswordVisible ? 'Hide Password' : 'Mostrar Contraseña' }}
+            <button type="button" class="password-toggle" (click)="confirmPasswordVisible = !confirmPasswordVisible"
+              [attr.aria-label]="confirmPasswordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+              @if (confirmPasswordVisible) {
+              <!-- Ojo cerrado -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 4.2A10.8 10.8 0 0 1 12 4c5 0 9.3 3.1 11 8a11.8 11.8 0 0 1-3.1 4.8M6.2 6.2C4.7 7.5 3.5 9.4 3 12c1.7 4.9 6 8 9 8 1 0 2-.2 2.9-.5" />
+              </svg>
+              } @else {
+              <!-- Ojo abierto -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              }
             </button>
           </div>
 
