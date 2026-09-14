@@ -2,50 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../enviroments/enviroment';
-
-export interface RegisterRequest {
-  nombres: string;
-  apellidos: string;
-  tipoDocumento: string;
-  numeroDocumento: string;
-  correo: string;
-  telefono: string;
-  tipoVinculacion: string;
-  cargo: string;
-  empresaProveedora?: string;
-  password: string;
-  confirmPassword: string;
-}
-
-export interface LoginRequest {
-  correo: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  success: boolean;
-  message: string;
-  data: {
-    token: string;
-    user: {
-      id: string;
-      nombres: string;
-      correo: string;
-      estado: string;
-    };
-  };
-}
-
-export interface RegisterResponse {
-  message: string;
-  user: {
-    id: string;
-    nombres: string;
-    apellidos: string;
-    correo: string;
-    estado: string;
-  };
-}
+import { RegisterRequest, LoginRequest, LoginResponse, RegisterResponse, AuthUser } from '../../utils/interface_enums_types'
 
 @Injectable({
   providedIn: 'root',
@@ -65,6 +22,18 @@ export class AuthServiceTs {
       .pipe(
         tap(response => {
           localStorage.setItem('token', response.data.token);
+          console.log("respuesta", response)
+
+          const token = localStorage.getItem('token');
+
+          if (token) {
+            const payload = JSON.parse(
+              atob(token.split('.')[1])
+            );
+
+            console.log('Datos del usuario dentro del token:', payload);
+            console.log("Nombre completo", payload.nombres, payload.apellidos)
+          }
         })
       );
   }
@@ -74,6 +43,12 @@ export class AuthServiceTs {
   }
 
   getRole(): string | null {
+    const user = this.getCurrentUser();
+
+    return user?.rolSistema ?? null;
+  }
+
+  getCurrentUser(): AuthUser | null {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -81,9 +56,21 @@ export class AuthServiceTs {
     }
 
     try {
-      const payload = JSON.parse(atob(token.split('.')[1])); //Atob lo decodifica, token.split('.')[1] obtiene la segunda parte del token que es el payload
+      const payload = JSON.parse(atob(token.split('.')[1]));
 
-      return payload.rol ?? null;
+      return {
+        id: payload.id,
+        nombres: payload.nombres,
+        apellidos: payload.apellidos,
+        correo: payload.correo,
+        tipoDocumento: payload.tipoDocumento,
+        numeroDocumento: payload.numeroDocumento,
+        telefono: payload.telefono,
+        tipoVinculacion: payload.tipoVinculacion,
+        rolSistema: payload.rolSistema,
+        cargo: payload.cargo,
+        estado: payload.estado,
+      };
     } catch {
       return null;
     }

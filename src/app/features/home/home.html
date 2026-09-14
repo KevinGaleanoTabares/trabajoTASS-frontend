@@ -1,1 +1,24 @@
-<h1>Bienvenido a TASS!!</h1>
+<div class="dashboard-layout">
+
+  <app-header
+    [showProfile]="false"
+    (notificationClick)="onNotificationClick()"
+  />
+
+  <div class="dashboard-body">
+
+    <app-navbar
+      [items]="navItems"
+      [activeItem]="activeItem"
+      (logout)="onLogout()"
+    />
+
+    <main class="dashboard-content">
+
+      <router-outlet />
+
+    </main>
+
+  </div>
+
+</div>

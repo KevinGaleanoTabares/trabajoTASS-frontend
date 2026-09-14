@@ -14,9 +14,12 @@ import { SweetAlertService } from '../../../core/services/sweet-alert-service'
 export class Login {
 
   ngOnInit(): void {
-    localStorage.clear();
-    sessionStorage.clear();
+    if (typeof localStorage !== 'undefined') {
+      localStorage.clear();
+      sessionStorage.clear();
+    }
   }
+
   private readonly formBuilder = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly authService = inject(AuthServiceTs);

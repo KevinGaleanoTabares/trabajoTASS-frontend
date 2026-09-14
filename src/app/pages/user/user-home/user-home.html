@@ -1,0 +1,304 @@
+<section class="dashboard-heading">
+  <div>
+    <h1>Mis familiares</h1>
+    <p>Consulta y registra las personas relacionadas contigo.</p>
+  </div>
+
+  <button type="button" class="register-button" (click)="openFamilyModal()">
+    <span class="plus">+</span>
+    Registrar familiar
+  </button>
+</section>
+
+
+<section class="family-table-container">
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Parentesco</th>
+        <th>Rol</th>
+        <th>Conflicto</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td colspan="4">
+          No tienes familiares registrados.
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</section>
+
+
+@if (isFamilyModalOpen) {
+
+  <div class="modal-overlay">
+
+    <div class="modal">
+
+      <div class="modal-header">
+
+        <h2>Registrar familiar</h2>
+
+        <button type="button" class="close-button" (click)="closeFamilyModal()">
+          ×
+        </button>
+
+      </div>
+
+
+      <form [formGroup]="familyForm" (ngSubmit)="registrarFamiliar()">
+
+        <div class="modal-body">
+
+          <div class="form-group">
+
+            <label for="nombres">
+              Nombre
+            </label>
+
+            <input
+              id="nombres"
+              type="text"
+              formControlName="nombres"
+              placeholder="Ingrese el nombre"/>
+
+            @if (
+              familyForm.get('nombres')?.invalid &&
+              familyForm.get('nombres')?.touched
+            ) {
+              <small>
+                El nombre es obligatorio.
+              </small>
+            }
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="apellidos">
+              Apellido
+            </label>
+
+            <input
+              id="apellidos"
+              type="text"
+              formControlName="apellidos"
+              placeholder="Ingrese el apellido"/>
+
+            @if (
+              familyForm.get('apellidos')?.invalid &&
+              familyForm.get('apellidos')?.touched
+            ) {
+              <small>
+                El apellido es obligatorio.
+              </small>
+            }
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="tipoDocumento">
+              Tipo de documento
+            </label>
+
+            <select
+              id="tipoDocumento"
+              formControlName="tipoDocumento">
+
+              <option value="">
+                Seleccione
+              </option>
+
+              <option value="CC">
+                Cédula de ciudadanía
+              </option>
+
+              <option value="CE">
+                Cédula de extranjería
+              </option>
+
+              <option value="NIT">
+                NIT
+              </option>
+
+              <option value="PASAPORTE">
+                Pasaporte
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="numeroDocumento">
+              Número de documento
+            </label>
+
+            <input
+              id="numeroDocumento"
+              type="text"
+              formControlName="numeroDocumento"
+              placeholder="Ingrese el número"/>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="tipoVinculo">
+              Tipo de vínculo familiar
+            </label>
+
+            <select
+              id="tipoVinculo"
+              formControlName="tipoVinculo">
+
+              <option value="">
+                Seleccione
+              </option>
+
+              <option value="Padre">Padre</option>
+              <option value="Madre">Madre</option>
+              <option value="Primo">Primo</option>
+              <option value="Prima">Prima</option>
+              <option value="Hijo">Hijo</option>
+              <option value="Hija">Hija</option>
+              <option value="Esposo">Esposo</option>
+              <option value="Esposa">Esposa</option>
+              <option value="Amante">Amante</option>
+              <option value="Pareja">Pareja</option>
+              <option value="Tio">Tío</option>
+              <option value="Tia">Tía</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="tipoRelacion">
+              Relación con la organización
+            </label>
+
+            <select id="tipoRelacion" formControlName="tipoRelacion">
+
+              <option value="">Seleccione</option>
+              <option value="empleado">Empleado</option>
+              <option value="administrativo">Administrativo</option>
+              <option value="directivo">Directivo</option>
+              <option value="proveedor">Proveedor</option>
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+          Cargos
+          <select formControlName="cargo">
+            <option value="">Seleccione un cargo</option>
+
+            @for (cargo of cargos; track cargo) {
+            <option [value]="cargo">
+              {{ cargo }}
+            </option>
+            }
+          </select>
+            @if (isInvalid('cargo')) {
+            <small class="field-error">Selecciona una opción.</small>
+          }
+        </label>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="telefono">
+              Teléfono
+            </label>
+
+            <input
+              id="telefono"
+              type="tel"
+              formControlName="telefono"
+              placeholder="Ingrese el teléfono"/>
+
+          </div>
+
+
+          @if (familyForm.get('tipoRelacion')?.value === 'proveedor') {
+
+            <div class="form-group">
+
+              <label for="nombreEmpresa">
+                Nombre de la empresa
+              </label>
+
+              <input
+                id="nombreEmpresa"
+                type="text"
+                formControlName="nombreEmpresa"
+                placeholder="Ingrese el nombre de la empresa"/>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="nitEmpresa">
+                NIT de la empresa
+              </label>
+
+              <input
+                id="nitEmpresa"
+                type="text"
+                formControlName="nitEmpresa"
+                placeholder="Ingrese el NIT"/>
+
+            </div>
+
+          }
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="closeFamilyModal()">
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="save-button">
+            Registrar familiar
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+}

@@ -1,0 +1,77 @@
+.app-header {
+  width: 100%;
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 var(--spacing-xl);
+
+  background: white;
+  border-bottom: var(--border-width-thin) solid #e2e8f0;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  width: 105px;
+  height: auto;
+
+  display: block;
+
+  transform: translateY(2px);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.profile-button,
+.notification-button {
+  width: 40px;
+  height: 40px;
+
+  min-height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  background: transparent;
+  color: #4a5568;
+}
+
+.profile-button:hover,
+.notification-button:hover {
+  background: #f7fafc;
+  color: var(--color-primary);
+}
+
+.profile-button svg,
+.notification-button svg {
+  width: 21px;
+  height: 21px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
