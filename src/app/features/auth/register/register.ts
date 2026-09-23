@@ -205,34 +205,34 @@ export class Register {
   }
 
   if (control.hasError('required')) {
-    return 'Este campo es obligatorio.';
+    return 'Este campo es obligatorio. *';
   }
 
   if (control.hasError('minlength')) {
-    return `Debe tener mínimo ${control.errors['minlength'].requiredLength} caracteres.`;
+    return `Debe tener mínimo ${control.errors['minlength'].requiredLength} caracteres. *`;
   }
 
   if (control.hasError('maxlength')) {
-    return `Debe tener máximo ${control.errors['maxlength'].requiredLength} caracteres.`;
+    return `Debe tener máximo ${control.errors['maxlength'].requiredLength} caracteres. *`;
   }
 
   if (control.hasError('pattern')) {
-    return 'El formato ingresado no es válido.';
+    return 'El formato ingresado no es válido. *';
   }
 
   if (control.hasError('email')) {
-    return 'Ingresa un correo electrónico válido.';
+    return 'Ingresa un correo electrónico válido. *';
   }
 
   if (control.hasError('passwordMismatch')) {
-    return 'Las contraseñas no coinciden.';
+    return 'Las contraseñas no coinciden. *';
   }
 
   if (control.hasError('backend')) {
     return control.errors['backend'];
   }
 
-  return 'Revisa bien la información ingresada.';
+  return 'Revisa bien la información ingresada. *';
 }
 
   buscarEmpresa(): void {

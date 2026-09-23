@@ -73,8 +73,28 @@ export class Home {
         },
         {
           label: 'Dashboard',
-          route: '/home',
+          route: '/admin',
           icon: 'dashboard',
+        },
+        {
+          label: 'Empleados',
+          route: 'admin/empleados',
+          icon: 'profile'
+        },
+        {
+          label: 'Administrativos',
+          route: 'admin/administrativos',
+          icon: 'profile'
+        },
+        {
+          label: 'Directivos',
+          route: '/admin/directivos',
+          icon: 'profile'
+        },
+        {
+          label: 'Proveedores',
+          route: 'admin/proveedores',
+          icon: 'profile'
         },
         {
           label: 'Documentos',

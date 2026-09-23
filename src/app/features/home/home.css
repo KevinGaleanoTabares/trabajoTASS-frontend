@@ -8,9 +8,13 @@
 .dashboard-body {
   flex: 1;
   display: flex;
+  min-width: 0;
 }
 
 .dashboard-content {
   flex: 1;
+  min-width: 0;
+  max-width: 100%;
   padding: var(--spacing-2xl);
+  overflow-x: hidden;
 }

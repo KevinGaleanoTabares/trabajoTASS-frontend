@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api/auth',
-  apico: 'http://localhost:3000/api'
+  apico: 'http://localhost:3000/api',
+  apiconflicts: 'http:///localhost:3000/api/conflicts'
 
 };

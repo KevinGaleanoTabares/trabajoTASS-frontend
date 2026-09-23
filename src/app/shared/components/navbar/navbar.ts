@@ -14,6 +14,7 @@ export interface NavItem {
   styleUrl: './navbar.css',
 })
 export class Navbar {
+
   @Input() activeItem = '';
 
   @Input() items: NavItem[] = [];

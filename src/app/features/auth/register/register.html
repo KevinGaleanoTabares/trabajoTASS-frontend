@@ -3,29 +3,30 @@
     <div class="brand">
       <img src="../../../../assets/images/tass.png" alt="TASS Logo" class="brand-logo" />
     </div>
-
-    <p class="letter-size">Crear cuenta de usuario</p>
-
+    <h2>
+    <p class="letter-size">Crear cuenta de usuario en TASS</p>
+    <p>⚠️ * = Campo requerido ⚠️</p>
+      </h2>
     <form [formGroup]="registerForm" (ngSubmit)="submit()">
       <div class="form-grid">
         <label>
-          Nombres
+          Nombres *
           <input type="text" formControlName="nombres" [class.input-error]="isInvalid('nombres')" placeholder="Ingrese sus nombres" />
           @if (isInvalid('nombres')) {
-          <small class="field-error">Ingresa mínimo dos caracteres.</small>
+          <small class="field-error">Ingresa mínimo dos caracteres. *</small>
           }
         </label>
 
         <label>
-          Apellidos
+          Apellidos *
           <input type="text" formControlName="apellidos" [class.input-error]="isInvalid('apellidos')" placeholder="Ingrese sus apellidos"/>
           @if (isInvalid('apellidos')) {
-            <small class="field-error">Ingresa mínimo dos caracteres.</small>
+            <small class="field-error">Ingresa mínimo dos caracteres. *</small>
           }
         </label>
 
         <label>
-          Tipo de documento
+          Tipo de documento *
            <select formControlName="tipoDocumento" [class.input-error]="isInvalid('tipoDocumento')">
             <option value="">Selecciona una opción</option>
             <option value="CC">CC</option>
@@ -39,7 +40,7 @@
         </label>
 
         <label>
-          Número de documento
+          Número de documento *
           <input type="text" formControlName="numeroDocumento" [class.input-error]="isInvalid('numeroDocumento')" placeholder="Ingrese el número de documento"/>
           @if (isInvalid('numeroDocumento')) {
             <small class="field-error">{{ getErrorMessage('numeroDocumento') }}</small>
@@ -51,7 +52,7 @@
         }
 
          <label>
-          Correo electrónico
+          Correo electrónico *
           <input type="email" formControlName="correo" [class.input-error]="isInvalid('correo')" placeholder="Ingrese su correo electrónico"/>
           @if (isInvalid('correo')) {
             <small class="field-error">{{ getErrorMessage('correo') }}</small>
@@ -59,15 +60,15 @@
         </label>
 
             <label>
-          Teléfono
+          Teléfono *
           <input type="tel" formControlName="telefono" [class.input-error]="isInvalid('telefono')" placeholder="Ingrese su número de teléfono"/>
           @if (isInvalid('telefono')) {
-            <small class="field-error">Ingresa un número de teléfono válido.</small>
+            <small class="field-error">Ingresa un número de teléfono válido. *</small>
           }
         </label>
 
          <label>
-          Vinculación con TASS
+          Vinculación con TASS *
           <select formControlName="tipoVinculacion" [class.input-error]="isInvalid('tipoVinculacion')">
             <option value="">Selecciona una opción</option>
             <option value="empleado">Empleado</option>
@@ -76,13 +77,13 @@
             <option value="proveedor">Proveedor</option>
           </select>
             @if (isInvalid('tipoVinculacion')) {
-            <small class="field-error">Selecciona una opción.</small>
+            <small class="field-error">Selecciona una opción. *</small>
           }
         </label>
 
         @if (registerForm.get('tipoVinculacion')?.value === 'proveedor') {
         <label class="empresa-nit">
-          NIT de la empresa
+          NIT de la empresa *
 
           <input type="text" formControlName="empresaProveedora" (blur)="buscarEmpresa()" [class.input-error]="isInvalid('empresaProveedora')"
             placeholder="Ingrese el NIT de la empresa" />
@@ -101,14 +102,14 @@
 
           @if (isInvalid('empresaProveedora')) {
           <small class="field-error">
-            Ingresa un NIT válido.
+            Ingresa un NIT válido. *
           </small>
           }
         </label>
         }
 
         <label>
-          Cargos
+          Cargos *
           <select formControlName="cargo">
             <option value="">Seleccione un cargo</option>
 
@@ -119,12 +120,12 @@
             }
           </select>
             @if (isInvalid('cargo')) {
-            <small class="field-error">Selecciona una opción.</small>
+            <small class="field-error">Selecciona una opción. *</small>
           }
         </label>
 
         <label [class.password-after-provider]="registerForm.get('tipoVinculacion')?.value === 'proveedor'">
-          Contraseña
+          Contraseña *
           <div class="password-field">
             <input
               [type]="passwordVisible ? 'text' : 'password'"
@@ -151,13 +152,13 @@
           </div>
           @if (isInvalid('password')) {
             <small class="field-error">
-              Mínimo 9 caracteres, mayúscula, minúscula, número y carácter especial.
+              Mínimo 9 caracteres totales, entre ellos al menos: 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial, entre ellos: [ _!@#$%^&*() ]. *
             </small>
           }
         </label>
 
         <label [class.password-after-provider]="registerForm.get('tipoVinculacion')?.value === 'proveedor'">
-          Confirmar contraseña
+          Confirmar contraseña *
           <div class="password-field">
             <input
               [type]="confirmPasswordVisible ? 'text' : 'password'"
@@ -188,11 +189,11 @@
           @if (registerForm.hasError('passwordMismatch') &&
           registerForm.get('confirmPassword')?.touched) {
             <small class="field-error">
-              Las contraseñas no coinciden
+              Las contraseñas no coinciden *
             </small>
           }
           @if (isInvalid('confirmPassword')) {
-            <small class="field-error">Confirma la contraseña.</small>
+            <small class="field-error">Confirma la contraseña. *</small>
           }
         </label>
       </div>

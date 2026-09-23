@@ -1,40 +1,88 @@
 <section class="dashboard-heading">
   <div>
-    <h1>Dashboard</h1>
+    <h1>Página del Administrador</h1>
     <p>Resumen general de la información de TASS.</p>
   </div>
+
+  <button type="button" (click)="detectConflicts()" [disabled]="isDetecting">
+
+    @if (isDetecting) {
+    Detectando...
+    } @else {
+    Detectar conflictos
+    }
+  </button>
 </section>
+
+
+@if(detectionMessage) {
+<p class="detection-message">
+  {{ detectionMessage }}
+</p>
+}
+
+@if(isLoadingConflicts) {
+<div class="table-message">
+  <div class="spinner"></div>
+  <p>Cargando conflictos...</p>
+</div>
+
+} @else if (conflictsErrorMessage) {
+<p class="error-message">
+  {{ conflictsErrorMessage }}
+</p>
+} @else if (conflicts.length === 0) {
+<div class="table-message">
+  <p>No hay conflictos registrados</p>
+</div>
+}
+
+@if (isLoading) {
+<div class="loading-container">
+  <div class="spinner"></div>
+  <p>Cargando estadísticas...</p>
+
+</div>
+}
+
+@if (errorMessage) {
+<p class="error-message"> {{ errorMessage }}</p>
+}
+
+@if (!isLoading && !errorMessage) {
 
 <section class="kpi-grid">
 
   <article class="kpi-card">
     <span class="kpi-title">Usuarios registrados</span>
-    <strong>0</strong>
+    <strong>{{ stats.totalUsuarios }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Conflictos detectados</span>
-    <strong>0</strong>
+    <strong>{{ stats.totalConflictos }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Conflictos de alto riesgo</span>
-    <strong>0</strong>
+    <strong>{{ stats.conflictosAltoRiesgo }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Conflictos pendientes</span>
-    <strong>0</strong>
+    <strong>{{ stats.conflictosPendientes }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Tasa de resolución</span>
-    <strong>0%</strong>
+    <strong>{{ stats.tasaResolucion }}%</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Tiempo promedio de resolución</span>
-    <strong>0 días</strong>
+    <strong>{{ stats.tiempoPromedioResolucion}} días</strong>
   </article>
 
 </section>
+
+}

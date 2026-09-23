@@ -1,0 +1,118 @@
+<section class="conflicts-section">
+  <div>
+    <h2> Conflictos detectados </h2>
+    <p>Lista de conflictos registrados en el sistema.</p>
+  </div>
+
+<div class="filters-container">
+
+  <input id="" type="text" placeholder="Buscar por código, nombre, documento o correo..." [(ngModel)]="searchTerm"
+    (input)="searchTerm = $any($event.target).value; applyFilters()" />
+
+  <select id="" [value]="selectedLevel" (change)="selectedLevel = $any($event.target).value; applyFilters()">
+
+    <option value="">Todos los niveles</option>
+    <option value="BAJO">Bajo</option>
+    <option value="MEDIO">Medio</option>
+    <option value="ALTO">Alto</option>
+
+  </select>
+
+  <select id="" [value]="selectedStatus" (change)="selectedStatus = $any($event.target).value; applyFilters()">
+
+    <option value="">Todos los estados</option>
+    <option value="PENDIENTE">Pendiente</option>
+    <option value="EN_INVESTIGACION">En investigación</option>
+    <option value="RESUELTO">Resuelto</option>
+    <option value="DESCARTADO">Descartado</option>
+    <option value="ESCALADO">Escalado</option>
+
+  </select>
+
+  <button type="button" class="clear-filters-button" (click)="clearFilters()">
+    Limpiar
+  </button>
+
+</div>
+
+@if (isLoading) {
+
+<div class="table-message">
+  <p>Cargando Conflictos...</p>
+      </div>
+
+    } @else if (errorMessage) {
+
+      <div class="table-message">
+        <p>{{  errorMessage  }}</p>
+      </div>
+
+    } @else if (conflicts.length === 0) {
+
+    <div class="table-message">
+      <p>No hay conflictos para esta categoría.</p>
+    </div>
+
+    } @else {
+
+    <div class="table-container">
+
+      <table class="conflicts-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre Declarante</th>
+            <th>Nivel</th>
+            <th>Estado</th>
+            <th>Fecha de detección</th>
+            <th>Involucrados</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (conflict of filteredConflicts; track conflict._id ) {
+          <tr>
+
+            <td>
+              {{ conflict.codigo }}
+            </td>
+
+            <td>
+              {{  conflict.involucrados[0]?.nombre }} y {{  conflict.involucrados[1]?.nombre }}
+            </td>
+
+            <td>
+              <span
+                class="conflict-level"
+                [class.level-low]="conflict.nivel === 'BAJO'"
+                [class.level-medium]="conflict.nivel === 'MEDIO'"
+                [class.level-high]="conflict.nivel === 'ALTO'"
+                >
+                {{ conflict.nivel }}
+              </span>
+            </td>
+
+            <td>
+              {{ conflict.estado }}
+            </td>
+
+            <td>
+              {{ conflict.fechaDeteccion | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+
+            <td>
+              {{ conflict.involucrados.length }}
+            </td>
+
+            <td>
+              <button type="button" class="detail-button"> Ver detalle </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+
+  </section>

@@ -14,6 +14,10 @@ import { rolesGuard } from './core/guards/roles.guard';
 
 import { Documents } from './pages/documents/documents';
 import { Configuration } from './pages/configuration/configuration';
+import { Empleados } from './pages/admin/empleados/empleados';
+import { Administrativos } from './pages/admin/administrativos/administrativos';
+import { Directivos } from './pages/admin/directivos/directivos';
+import { Proveedores } from './pages/admin/proveedores/proveedores';
 
 
 export const routes: Routes = [
@@ -58,12 +62,34 @@ export const routes: Routes = [
 
       {
         path: 'admin',
-        component: AdminHome,
         canActivate: [authGuard, rolesGuard],
         data: {
           rolSistema: ['admin']
-        }
+        },
+        children: [
+          {
+            path: '',
+            component: AdminHome
+          },
+          {
+            path: 'empleados',
+            component: Empleados
+          },
+          {
+            path: 'administrativos',
+            component: Administrativos
+          },
+          {
+            path: 'directivos',
+            component: Directivos
+          },
+          {
+            path: 'proveedores',
+            component: Proveedores
+          }
+        ]
       },
+
       {
         path: 'super-admin',
         component: SuperAdminHome,
