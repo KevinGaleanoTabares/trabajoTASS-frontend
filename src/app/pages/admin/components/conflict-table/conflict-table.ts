@@ -15,6 +15,8 @@ export class ConflictTable implements OnInit {
   private readonly conflictService = inject(ConflictService);
   private readonly changeDetector = inject(ChangeDetectorRef);
 
+  selectedConflict: Conflict | null = null;
+  isDetailModalOpen = false;
 
   @Input() categoria!: Categoria;
 
@@ -95,6 +97,16 @@ export class ConflictTable implements OnInit {
     this.selectedStatus = '';
 
     this.filteredConflicts = this.conflicts;
+  }
+
+  openDetailModal(conflict: Conflict): void {
+    this.selectedConflict = conflict;
+    this.isDetailModalOpen = true;
+  }
+
+  closeDetailModal(): void {
+    this.selectedConflict = null;
+    this.isDetailModalOpen = false;
   }
 
 }

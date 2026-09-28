@@ -147,6 +147,7 @@ export interface Conflict {
     | 'ESCALADO';
   categoria: Categoria;
   fechaDeteccion: string;
+  coincidencias: string[];
   descripcion: string;
   involucrados: ConflictInvolved[];
 }

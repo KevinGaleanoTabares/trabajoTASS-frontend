@@ -87,7 +87,7 @@ export class UserHome implements OnInit {
     if (this.familyForm.invalid) {
       this.familyForm.markAllAsTouched();
 
-      this.sweetAlert.error('Por favor completa todos los campos obligatorios.');
+      this.sweetAlert.error('Por favor verifica los campos y vuelve a intentarlo.');
       return;
     }
 

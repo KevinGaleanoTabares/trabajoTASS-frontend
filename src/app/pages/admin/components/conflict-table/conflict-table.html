@@ -4,115 +4,319 @@
     <p>Lista de conflictos registrados en el sistema.</p>
   </div>
 
-<div class="filters-container">
+  <div class="filters-container">
 
-  <input id="" type="text" placeholder="Buscar por código, nombre, documento o correo..." [(ngModel)]="searchTerm"
-    (input)="searchTerm = $any($event.target).value; applyFilters()" />
+    <input id="" type="text" placeholder="Buscar por código, nombre, documento o correo..." [(ngModel)]="searchTerm"
+      (input)="searchTerm = $any($event.target).value; applyFilters()" />
 
-  <select id="" [value]="selectedLevel" (change)="selectedLevel = $any($event.target).value; applyFilters()">
+    <select id="" [value]="selectedLevel" (change)="selectedLevel = $any($event.target).value; applyFilters()">
 
-    <option value="">Todos los niveles</option>
-    <option value="BAJO">Bajo</option>
-    <option value="MEDIO">Medio</option>
-    <option value="ALTO">Alto</option>
+      <option value="">Todos los niveles</option>
+      <option value="BAJO">Bajo</option>
+      <option value="MEDIO">Medio</option>
+      <option value="ALTO">Alto</option>
 
-  </select>
+    </select>
 
-  <select id="" [value]="selectedStatus" (change)="selectedStatus = $any($event.target).value; applyFilters()">
+    <select id="" [value]="selectedStatus" (change)="selectedStatus = $any($event.target).value; applyFilters()">
 
-    <option value="">Todos los estados</option>
-    <option value="PENDIENTE">Pendiente</option>
-    <option value="EN_INVESTIGACION">En investigación</option>
-    <option value="RESUELTO">Resuelto</option>
-    <option value="DESCARTADO">Descartado</option>
-    <option value="ESCALADO">Escalado</option>
+      <option value="">Todos los estados</option>
+      <option value="PENDIENTE">Pendiente</option>
+      <option value="EN_INVESTIGACION">En investigación</option>
+      <option value="RESUELTO">Resuelto</option>
+      <option value="DESCARTADO">Descartado</option>
+      <option value="ESCALADO">Escalado</option>
 
-  </select>
+    </select>
 
-  <button type="button" class="clear-filters-button" (click)="clearFilters()">
-    Limpiar
-  </button>
+    <button type="button" class="clear-filters-button" (click)="clearFilters()">
+      Limpiar
+    </button>
+
+  </div>
+
+  @if (isLoading) {
+
+  <div class="table-message">
+    <p>Cargando Conflictos...</p>
+  </div>
+
+  } @else if (errorMessage) {
+
+  <div class="table-message">
+    <p>{{  errorMessage  }}</p>
+  </div>
+
+  } @else if (conflicts.length === 0) {
+
+  <div class="table-message">
+    <p>No hay conflictos para esta categoría.</p>
+  </div>
+
+  } @else {
+
+  <div class="table-container">
+
+    <table class="conflicts-table">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre Declarante</th>
+          <th>Nivel</th>
+          <th>Estado</th>
+          <th>Fecha de detección</th>
+          <th>Involucrados</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (conflict of filteredConflicts; track conflict._id ) {
+        <tr>
+
+          <td>
+            {{  conflict.codigo  }}
+          </td>
+
+          <td>
+            {{  conflict.involucrados[0]?.nombre }} y {{ conflict.involucrados[1]?.nombre  }}
+          </td>
+
+          <td>
+            <span class="conflict-level" [class.level-low]="conflict.nivel === 'BAJO'"
+              [class.level-medium]="conflict.nivel === 'MEDIO'" [class.level-high]="conflict.nivel === 'ALTO'">
+              {{  conflict.nivel }}
+            </span>
+          </td>
+
+          <td>
+            {{  conflict.estado  }}
+          </td>
+
+          <td>
+            {{  conflict.fechaDeteccion | date: 'dd/MM/yyyy HH:mm'  }}
+          </td>
+
+          <td>
+            {{  conflict.involucrados.length  }}
+          </td>
+
+          <td>
+            <button type="button" class="detail-button" (click)="openDetailModal(conflict)"> Ver detalle </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+
+</section>
+
+@if (isDetailModalOpen && selectedConflict) {
+
+<div class="modal-overlay">
+
+<div class="detail-modal" (click)="$event.stopPropagation()">
+
+  <div class="modal-header">
+
+    <div>
+      <h2>Detalle del conflicto</h2>
+      <p>
+        Información completa del conflicto detectado.
+      </p>
+    </div>
+
+    <button type="button" class="modal-close-button" (click)="closeDetailModal()" aria-label="Cerrar"> × </button>
+
+  </div>
+
+  <div class="modal-content">
+
+    <div class="detail-grid">
+
+      <div class="detail-item">
+
+        <span class="detail-label">Código</span>
+        <span class="detail-value">
+          {{  selectedConflict.codigo  }}
+        </span>
+      </div>
+
+
+      <div class="detail-item">
+
+        <span class="detail-label">Nivel</span>
+
+        <span class="detail-value">
+          {{  selectedConflict.nivel  }}
+        </span>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span class="detail-label">Estado</span>
+
+        <span class="detail-value">
+          {{  selectedConflict.estado  }}
+        </span>
+
+      </div>
+
+
+      <div class="detail-item">
+
+        <span class="detail-label">Fecha de detección</span>
+
+        <span class="detail-value">
+          {{  selectedConflict.fechaDeteccion | date:'dd/MM/yyyy HH:mm'  }}
+        </span>
+
+      </div>
+
+      <div class="detail-section">
+
+        <h3>Descripción</h3>
+
+        <p>
+          {{  selectedConflict.descripcion  }}
+        </p>
+
+      </div>
+
+      <div class="detail-section">
+        <h3>Coincidencias detectadas</h3>
+
+        <div class="coincidences">
+
+          @for(coincidencia of selectedConflict.coincidencias; track coincidencia) {
+
+          <span class="coincidence-tag">
+            {{  coincidencia  }}
+          </span>
+          }
+        </div>
+
+      </div>
+
+      <div class="detail-section involved-section">
+
+        <h3>Personas involucradas</h3>
+
+        <div class="involved-users">
+
+          @for(person of selectedConflict.involucrados; track person.userId) {
+
+          <div class="person-card">
+
+            <div class="person-card-header">
+
+              <h4>
+                {{  person.nombre  }}
+              </h4>
+
+              <span class="person-role">
+                {{  person.tipoVinculacion  }}
+              </span>
+
+            </div>
+
+            <div class="person-data">
+
+              <div>
+                <span class="detail-label">
+                  Documento
+                </span>
+
+                <span class="detail-value">
+                  {{  person.tipo }}
+                  {{  person.documento }}
+                </span>
+              </div>
+
+              <div>
+                <span class="detail-label">
+                  Correo
+                </span>
+
+                <span class="detail-value">
+                  {{  person.correo  }}
+                </span>
+              </div>
+
+              <div>
+                <span class="detail-label">
+                  Teléfono
+                </span>
+
+                <span class="detail-value">
+                  {{  person.telefono  }}
+                </span>
+              </div>
+
+              <div>
+                <span class="detail-label">
+                  Rol
+                </span>
+
+                <span class="detail-value">
+                  {{  person.rol  }}
+                </span>
+              </div>
+
+              @if (person.empresa) {
+
+              <div>
+                <span class="detail-label">
+                  Empresa
+                </span>
+
+                <span class="detail-value">
+                  {{  person.empresa  }}
+                </span>
+              </div>
+
+              } @if (person.nit) {
+
+              <div>
+                <span class="detail-label">
+                  NIT
+                </span>
+
+                <span class="detail-value">
+                  {{   person.nit  }}
+                </span>
+              </div>
+
+              }
+
+            </div>
+
+          </div>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+      <button type="button" class="secondary-button" (click)="closeDetailModal()">
+        Cerrar
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
-@if (isLoading) {
+</div>
+}
 
-<div class="table-message">
-  <p>Cargando Conflictos...</p>
-      </div>
-
-    } @else if (errorMessage) {
-
-      <div class="table-message">
-        <p>{{  errorMessage  }}</p>
-      </div>
-
-    } @else if (conflicts.length === 0) {
-
-    <div class="table-message">
-      <p>No hay conflictos para esta categoría.</p>
-    </div>
-
-    } @else {
-
-    <div class="table-container">
-
-      <table class="conflicts-table">
-        <thead>
-          <tr>
-            <th>Código</th>
-            <th>Nombre Declarante</th>
-            <th>Nivel</th>
-            <th>Estado</th>
-            <th>Fecha de detección</th>
-            <th>Involucrados</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          @for (conflict of filteredConflicts; track conflict._id ) {
-          <tr>
-
-            <td>
-              {{ conflict.codigo }}
-            </td>
-
-            <td>
-              {{  conflict.involucrados[0]?.nombre }} y {{  conflict.involucrados[1]?.nombre }}
-            </td>
-
-            <td>
-              <span
-                class="conflict-level"
-                [class.level-low]="conflict.nivel === 'BAJO'"
-                [class.level-medium]="conflict.nivel === 'MEDIO'"
-                [class.level-high]="conflict.nivel === 'ALTO'"
-                >
-                {{ conflict.nivel }}
-              </span>
-            </td>
-
-            <td>
-              {{ conflict.estado }}
-            </td>
-
-            <td>
-              {{ conflict.fechaDeteccion | date: 'dd/MM/yyyy HH:mm' }}
-            </td>
-
-            <td>
-              {{ conflict.involucrados.length }}
-            </td>
-
-            <td>
-              <button type="button" class="detail-button"> Ver detalle </button>
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-    }
-
-  </section>

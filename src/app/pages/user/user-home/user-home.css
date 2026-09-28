@@ -115,33 +115,45 @@
 }
 
 .modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+
+  padding: 0 0 24px;
+
   margin-bottom: 20px;
+}
+
+.header-title {
+  min-width: 0;
 }
 
 .modal-header h2 {
   margin: 0;
 }
 
-.close-button {
-  border: none;
-  background: rgb(240, 55, 55);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+.modal-close-button {
+  width: 32px;
+  height: 32px;
 
-  /* Tamaño cuadrado fijo */
-  width: 45px;
-  height: 40px;
-  padding: 0;
-
-  /* Centrar la "X" perfectamente adentro */
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  border: none;
+  background: transparent;
+
+  color: var(--text-secondary, #6b7280);
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
 }
+
+.modal-close-button:hover {
+  color: var(--text-primary, #111827);
+}
+
 
 
 .modal-body {

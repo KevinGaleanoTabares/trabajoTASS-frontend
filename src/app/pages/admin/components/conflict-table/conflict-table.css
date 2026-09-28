@@ -1,1 +1,222 @@
 @import '../../../../../styles/tablas.css';
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.detail-modal {
+  width: min(900px, 100%);
+  max-height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--background-color, #ffffff);
+  border-radius: 16px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+}
+
+.modal-header {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding: 24px 72px 24px 24px;
+
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.modal-header h2 {
+  margin: 0 0 6px;
+}
+
+.modal-header p {
+  margin: 0;
+  color: var(--text-secondary, #6b7280);
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+
+  width: 32px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: transparent;
+
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  color: var(--text-secondary, #6b7280);
+}
+
+.modal-close-button:hover {
+  color: var(--text-primary, #111827);
+}
+
+.modal-content {
+  padding: 24px;
+
+  overflow-y: auto;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 13px;
+  font-weight: 600;
+
+  color: var(--text-secondary, #6b7280);
+}
+
+.detail-value {
+  font-size: 14px;
+
+  color: var(--text-primary, #111827);
+}
+
+.detail-section {
+  margin-top: 24px;
+}
+
+.involved-section {
+  grid-column: 1 / -1;
+}
+
+.detail-section h3 {
+  margin: 0 0 12px;
+}
+
+.detail-section p {
+  margin: 0;
+
+  line-height: 1.6;
+}
+
+.coincidences {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.coincidence-tag {
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: var(--primary-light, #eaf2ff);
+  color: var(--primary-color, #0456f4);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.involved-users {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.person-card {
+  padding: 16px;
+
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+}
+
+.person-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+}
+
+.person-card-header h4 {
+  margin: 0;
+}
+
+.person-role {
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  background: #f3f4f6;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.person-data {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.person-data > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+
+  padding: 16px 24px;
+
+  border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+@media (max-width: 700px) {
+
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  .detail-modal {
+    max-height: 95vh;
+  }
+
+  .detail-grid,
+  .person-data,
+  .involved-users {
+    grid-template-columns: 1fr;
+  }
+
+}

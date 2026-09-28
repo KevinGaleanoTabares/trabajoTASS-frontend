@@ -121,7 +121,7 @@ export class Home {
         },
         {
           label: 'Dashboard',
-          route: '/home',
+          route: '/super-admin',
           icon: 'dashboard',
         },
         {

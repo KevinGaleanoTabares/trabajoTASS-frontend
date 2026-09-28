@@ -4,78 +4,92 @@
     <div class="spinner"></div>
     <p>Cargando tus familiares...</p>
   </div>
+
 } @else {
-<section class="dashboard-heading">
-  <div>
-    <h1>Mis familiares</h1>
-    <p>Consulta y registra las personas relacionadas contigo.</p>
-  </div>
 
-  <button type="button" class="register-button" (click)="openFamilyModal()">
-    <span class="plus">+</span>
-    Registrar familiar
-  </button>
-</section>
+  <section class="dashboard-heading">
+
+    <div>
+      <h1>Mis familiares</h1>
+      <p>Consulta y registra las personas relacionadas contigo.</p>
+    </div>
+
+    <button
+      type="button"
+      class="register-button"
+      (click)="openFamilyModal()"
+    >
+      <span class="plus">+</span>
+      Registrar familiar
+    </button>
+
+  </section>
 
 
-<section class="family-table-container">
+  <section class="family-table-container">
 
-  <table>
+    <table>
 
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Parentesco</th>
-        <th>Rol</th>
-        <th>Conflicto</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      @if (familyRelationships.length === 0) {
-
+      <thead>
         <tr>
-          <td colspan="4">
-            No tienes familiares registrados.
-          </td>
+          <th>Nombre</th>
+          <th>Parentesco</th>
+          <th>Rol</th>
+          <th>Conflicto</th>
         </tr>
+      </thead>
 
-      } @else {
+      <tbody>
 
-        @for (family of familyRelationships; track family._id) {
+        @if (familyRelationships.length === 0) {
 
           <tr>
-
-            <td>
-              {{  family.familiar.nombres  }}
-              {{  family.familiar.apellidos  }}
-            </td>
-
-            <td>
-              {{  family.parentesco }}
-            </td>
-
-            <td>
-              {{  family.familiar.tipoVinculacion  }}
-            </td>
-
-            <td>
-              @if (family.fechaConflicto) {
-                Sí
-              } @else {
-                No
-              }
+            <td colspan="4">
+              No tienes familiares registrados.
             </td>
           </tr>
+
+        } @else {
+
+          @for (family of familyRelationships; track family._id) {
+
+            <tr>
+
+              <td>
+                {{ family.familiar.nombres }}
+                {{ family.familiar.apellidos }}
+              </td>
+
+              <td>
+                {{ family.parentesco }}
+              </td>
+
+              <td>
+                {{ family.familiar.tipoVinculacion }}
+              </td>
+
+              <td>
+                @if (family.fechaConflicto) {
+                  Sí
+                } @else {
+                  No
+                }
+              </td>
+
+            </tr>
+
+          }
+
         }
-      }
-    </tbody>
 
-  </table>
+      </tbody>
 
-</section>
+    </table>
+
+  </section>
 
 }
+
 
 @if (isFamilyModalOpen) {
 
@@ -84,30 +98,106 @@
     <div class="modal">
 
       <div class="modal-header">
+
         <div class="header-title">
+
           <h2>Registrar familiar</h2>
-          <div>⚠️ * = Campo obligatorio ⚠️</div>
+
+          <div style="color: red">
+             * = Campo obligatorio
+          </div>
+
         </div>
-        <button type="button" class="close-button" (click)="closeFamilyModal()">
+
+        <button
+          type="button"
+          class="modal-close-button"
+          (click)="closeFamilyModal()"
+        >
           ×
         </button>
 
       </div>
 
 
-      <form [formGroup]="familyForm" (ngSubmit)="registrarFamiliar()">
+      <form
+        [formGroup]="familyForm"
+        (ngSubmit)="registrarFamiliar()"
+      >
 
         <div class="modal-body">
+
+
+          <!-- NOMBRES -->
+
+          <div class="form-group">
+
+            <label for="nombres">
+              Nombre *
+            </label>
+
+            <input
+              id="nombres"
+              type="text"
+              formControlName="nombres"
+              placeholder="Ingrese el nombre"
+            />
+
+            @if (
+              familyForm.get('nombres')?.invalid &&
+              familyForm.get('nombres')?.touched
+            ) {
+
+              <small>
+                El nombre es obligatorio. *
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- APELLIDOS -->
+
+          <div class="form-group">
+
+            <label for="apellidos">
+              Apellido *
+            </label>
+
+            <input
+              id="apellidos"
+              type="text"
+              formControlName="apellidos"
+              placeholder="Ingrese el apellido"
+            />
+
+            @if (
+              familyForm.get('apellidos')?.invalid &&
+              familyForm.get('apellidos')?.touched
+            ) {
+
+              <small>
+                El apellido es obligatorio. *
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- TIPO DOCUMENTO -->
 
           <div class="form-group">
 
             <label for="tipoDocumento">
-              Tipo de documento del familiar *
+              Tipo de documento *
             </label>
 
             <select
               id="tipoDocumento"
-              formControlName="tipoDocumento">
+              formControlName="tipoDocumento"
+            >
 
               <option value="">
                 Seleccione
@@ -130,17 +220,22 @@
               </option>
 
             </select>
-                 @if (
+
+            @if (
               familyForm.get('tipoDocumento')?.invalid &&
               familyForm.get('tipoDocumento')?.touched
             ) {
+
               <small>
                 El tipo de documento es obligatorio. *
               </small>
+
             }
 
           </div>
 
+
+          <!-- NUMERO DOCUMENTO -->
 
           <div class="form-group">
 
@@ -152,19 +247,24 @@
               id="numeroDocumento"
               type="text"
               formControlName="numeroDocumento"
-              placeholder="Ingrese el número"/>
+              placeholder="Ingrese el número"
+            />
 
-              @if (
+            @if (
               familyForm.get('numeroDocumento')?.invalid &&
               familyForm.get('numeroDocumento')?.touched
             ) {
+
               <small>
-                El numero de documento es obligatorio. *
+                El número de documento es obligatorio. *
               </small>
+
             }
 
           </div>
 
+
+          <!-- PARENTESCO -->
 
           <div class="form-group">
 
@@ -174,7 +274,8 @@
 
             <select
               id="tipoVinculo"
-              formControlName="tipoVinculo">
+              formControlName="tipoVinculo"
+            >
 
               <option value="">
                 Seleccione
@@ -194,17 +295,22 @@
               <option value="Tia">Tía</option>
 
             </select>
-                 @if (
+
+            @if (
               familyForm.get('tipoVinculo')?.invalid &&
               familyForm.get('tipoVinculo')?.touched
             ) {
+
               <small>
-                El tipo de vinculo familiar es obligatorio. *
+                El tipo de vínculo familiar es obligatorio. *
               </small>
+
             }
 
           </div>
 
+
+          <!-- RELACION CON ORGANIZACION -->
 
           <div class="form-group">
 
@@ -212,52 +318,188 @@
               Relación con la organización *
             </label>
 
-            <select id="tipoRelacion" formControlName="tipoRelacion">
+            <select
+              id="tipoRelacion"
+              formControlName="tipoRelacion"
+            >
 
-              <option value="">Seleccione</option>
-              <option value="empleado">Empleado</option>
-              <option value="administrativo">Administrativo</option>
-              <option value="directivo">Directivo</option>
-              <option value="proveedor">Proveedor</option>
+              <option value="">
+                Seleccione
+              </option>
+
+              <option value="empleado">
+                Empleado
+              </option>
+
+              <option value="proveedor">
+                Proveedor
+              </option>
+
+              <option value="administrativo">
+                Administrador
+              </option>
+
+              <option value="directivo">
+                Directivo
+              </option>
+
+              <option value="otro">
+                Otro
+              </option>
+
             </select>
-                @if (
-                familyForm.get('tipoRelacion')?.invalid &&
-                familyForm.get('tipoRelacion')?.touched
-                ) {
-                <small>
-                  El tipo de relacion con la empresa es obligatorio. *
-                </small>
-                }
-                </div>
 
-
-          <div class="form-group">
-
-            <label>
-          Cargos
-          <select formControlName="cargo">
-            <option value="">Seleccione un cargo * </option>
-
-            @for (cargo of cargos; track cargo) {
-            <option [value]="cargo">
-              {{ cargo }}
-            </option>
-            }
-          </select>
-        </label>
-
-             @if (
-              familyForm.get('cargo')?.invalid &&
-              familyForm.get('cargo')?.touched
+            @if (
+              familyForm.get('tipoRelacion')?.invalid &&
+              familyForm.get('tipoRelacion')?.touched
             ) {
+
               <small>
-                El cargo con la empresa es obligatorio. *
+                La relación con la organización es obligatoria. *
               </small>
+
             }
 
           </div>
 
+
+          <!-- CARGO -->
+
+          <div class="form-group">
+
+            <label for="cargo">
+              Cargo *
+            </label>
+
+            <select
+              id="cargo"
+              formControlName="cargo"
+            >
+
+              <option value="">
+                Seleccione un cargo
+              </option>
+
+              @for (cargo of cargos; track cargo) {
+
+                <option [value]="cargo">
+                  {{ cargo }}
+                </option>
+
+              }
+
+            </select>
+
+            @if (
+              familyForm.get('cargo')?.invalid &&
+              familyForm.get('cargo')?.touched
+            ) {
+
+              <small>
+                El cargo es obligatorio. *
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- TELEFONO -->
+
+          <div class="form-group">
+
+            <label for="telefono">
+              Teléfono *
+            </label>
+
+            <input
+              id="telefono"
+              type="text"
+              formControlName="telefono"
+              placeholder="Ingrese el teléfono"
+            />
+
+            @if (
+              familyForm.get('telefono')?.invalid &&
+              familyForm.get('telefono')?.touched
+            ) {
+
+              <small>
+                El teléfono es obligatorio. *
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- ESTADO -->
+
+          <div class="form-group">
+
+            <label for="estado">
+              Estado *
+            </label>
+
+            <select
+              id="estado"
+              formControlName="estado"
+            >
+
+              <option value="ACTIVO">
+                Activo
+              </option>
+
+              <option value="INACTIVO">
+                Inactivo
+              </option>
+
+            </select>
+
+            @if (
+              familyForm.get('estado')?.invalid &&
+              familyForm.get('estado')?.touched
+            ) {
+
+              <small>
+                El estado es obligatorio. *
+              </small>
+
+            }
+
+          </div>
+
+
+          <!-- DATOS DEL PROVEEDOR -->
+
           @if (familyForm.get('tipoRelacion')?.value === 'proveedor') {
+
+            <div class="form-group">
+
+              <label for="nombreEmpresa">
+                Nombre de la empresa *
+              </label>
+
+              <input
+                id="nombreEmpresa"
+                type="text"
+                formControlName="nombreEmpresa"
+                placeholder="Ingrese el nombre de la empresa"
+              />
+
+              @if (
+                familyForm.get('nombreEmpresa')?.invalid &&
+                familyForm.get('nombreEmpresa')?.touched
+              ) {
+
+                <small>
+                  El nombre de la empresa es obligatorio. *
+                </small>
+
+              }
+
+            </div>
+
 
             <div class="form-group">
 
@@ -269,19 +511,24 @@
                 id="nitEmpresa"
                 type="text"
                 formControlName="nitEmpresa"
-                placeholder="Ingrese el NIT"/>
+                placeholder="Ingrese el NIT"
+              />
+
+              @if (
+                familyForm.get('nitEmpresa')?.invalid &&
+                familyForm.get('nitEmpresa')?.touched
+              ) {
+
+                <small>
+                  El NIT de la empresa es obligatorio. *
+                </small>
+
+              }
 
             </div>
-                 @if (
-              familyForm.get('nitEmpresa')?.invalid &&
-              familyForm.get('nitEmpresa')?.touched
-            ) {
-              <small>
-                El nit de la empresa es obligatorio. *
-              </small>
-            }
 
           }
+
 
         </div>
 
@@ -291,13 +538,15 @@
           <button
             type="button"
             class="cancel-button"
-            (click)="closeFamilyModal()">
+            (click)="closeFamilyModal()"
+          >
             Cancelar
           </button>
 
           <button
             type="submit"
-            class="save-button">
+            class="save-button"
+          >
             Registrar familiar
           </button>
 
