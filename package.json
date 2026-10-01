@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve  --port 11001",
+    "start": "ng serve  --port 11001 --configuration local",
     "start:local": "ng serve  --port 11001 --configuration local",
     "start:development": "ng serve  --port 11001 --configuration development",
     "build": "ng build  --",

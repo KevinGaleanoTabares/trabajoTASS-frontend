@@ -55,32 +55,34 @@
 
   <article class="kpi-card">
     <span class="kpi-title">Usuarios registrados</span>
-    <strong>{{ stats.totalUsuarios }}</strong>
+    <strong>{{ stats?.totalUsuarios }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Conflictos detectados</span>
-    <strong>{{ stats.totalConflictos }}</strong>
+    <strong>{{ stats?.totalConflictos ?? 0 }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Conflictos de alto riesgo</span>
-    <strong>{{ stats.conflictosAltoRiesgo }}</strong>
+    <strong>{{ stats?.conflictosAltoRiesgo ?? 0 }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Conflictos pendientes</span>
-    <strong>{{ stats.conflictosPendientes }}</strong>
+    <strong>{{ stats?.conflictosPendientes ?? 0 }}</strong>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Tasa de resolución</span>
-    <strong>{{ stats.tasaResolucion }}%</strong>
+    <strong>{{ stats?.tasaResolucion ?? 0}}%</strong>
+    <span>{{  stats?.estadoResolucion  }}</span>
+    <span>Penalización: -{{  stats?.penalizacion}}%</span>
   </article>
 
   <article class="kpi-card">
     <span class="kpi-title">Tiempo promedio de resolución</span>
-    <strong>{{ stats.tiempoPromedioResolucion}} días</strong>
+    <strong>{{ stats?.tiempoPromedioResolucion ?? 0 }} días</strong>
   </article>
 
 </section>

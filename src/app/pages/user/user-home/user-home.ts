@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { cargos } from '../../../utils/cargos';
 import { FamilyService } from '../../../core/services/family.service';
-import { FamilyRelationship } from '../../../utils/interface_enums_types';
-import { SweetAlertService } from '../../../core/services/sweet-alert-service';
+import { FamilyRelationship, TipoDocumento } from '../../../utils/interface_enums_types';
+import { SweetAlertService } from '../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-user-home',
@@ -92,9 +92,17 @@ export class UserHome implements OnInit {
     }
 
     const data = {
-      tipoDocumento: this.familyForm.value.tipoDocumento!,
+      nombres: this.familyForm.value.nombres!,
+      apellidos: this.familyForm.value.apellidos!,
+      tipoDocumento: this.familyForm.value.tipoDocumento as TipoDocumento,
       numeroDocumento: this.familyForm.value.numeroDocumento!,
       parentesco: this.familyForm.value.tipoVinculo!,
+      tipoRelacion: this.familyForm.value.tipoRelacion!,
+      cargo: this.familyForm.value.cargo!,
+      telefono: this.familyForm.value.telefono!,
+      estado: this.familyForm.value.estado!,
+      nombreEmpresa: this.familyForm.value.nombreEmpresa ?? null,
+      nitEmpresa: this.familyForm.value.nitEmpresa ?? null,
     };
 
     this.familyService.createFamilyRelationship(data).subscribe({
@@ -102,9 +110,7 @@ export class UserHome implements OnInit {
       next: (response) => {
 
         this.sweetAlert.success(response.message || 'Familiar registrado correctamente.');
-
         this.closeFamilyModal();
-
         this.loadFamilyRelationship();
       },
 

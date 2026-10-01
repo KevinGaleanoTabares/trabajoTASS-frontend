@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ConflictService } from '../../../../core/services/conflict.service';
 import { Conflict, Categoria } from '../../../../utils/interface_enums_types';
+import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-conflict-table',
@@ -14,8 +15,12 @@ export class ConflictTable implements OnInit {
 
   private readonly conflictService = inject(ConflictService);
   private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly sweetAlert = inject(SweetAlertService);
 
   selectedConflict: Conflict | null = null;
+  showDetailModal = false;
+  isResolving = false;
+
   isDetailModalOpen = false;
 
   @Input() categoria!: Categoria;
@@ -107,6 +112,58 @@ export class ConflictTable implements OnInit {
   closeDetailModal(): void {
     this.selectedConflict = null;
     this.isDetailModalOpen = false;
+  }
+
+  openConflictDetail(conflict: Conflict): void {
+    this.selectedConflict = conflict;
+    this.showDetailModal = true;
+  }
+
+  closeConflictDetail(): void {
+    this.showDetailModal = false;
+    this.selectedConflict = null;
+  }
+
+  validateConflict(): void {
+
+    if (!this.selectedConflict) {
+      return;
+    }
+
+    this.isResolving = true;
+
+    this.conflictService.updateConflictStatus(this.selectedConflict._id, 'RESUELTO').subscribe({
+
+      next: (response) => {
+
+        const updatedConflict = response.data;
+
+        // Actualizar el conflicto dentro de la tabla
+        this.conflicts = this.conflicts.map(conflict => conflict._id === updatedConflict._id ? updatedConflict : conflict);
+
+        // Volver a aplicar filtros
+        this.applyFilters();
+
+        // Actualizar el conflicto seleccionado
+        this.selectedConflict = updatedConflict
+
+        this.isResolving = false;
+
+        this.sweetAlert.success('El conflicto fue validado y resuelto correctamente.');
+
+        this.closeConflictDetail();
+
+      },
+
+      error: (error) => {
+
+        this.isResolving = false;
+
+        this.sweetAlert.error(error?.error?.message ?? 'No se pudo resolver el conflicto.');
+      }
+
+    });
+
   }
 
 }

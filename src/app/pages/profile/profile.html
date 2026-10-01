@@ -1,1 +1,179 @@
-<p>profile works!</p>
+<section class="profile-page">
+
+  <div class="profile-header">
+
+    <div>
+
+      <h1>Mi perfil</h1>
+
+      <p>Consulta y administra la información de tu cuenta.</p>
+
+    </div>
+
+  </div>
+
+  <section class="profile-card">
+
+
+    <div class="profile-card-header">
+
+      <div>
+
+        <h2>Información personal</h2>
+
+        <p>Información asociada a tu cuenta</p>
+
+      </div>
+
+    </div>
+
+    <div class="profile-grid">
+
+      <div class="profile-field">
+
+        <span>Nombres</span>
+        <strong>{{  currentUser?.nombres  }}</strong>
+
+      </div>
+
+      <div class="profile-field">
+
+        <span>Apellidos</span>
+        <strong>{{  currentUser?.apellidos  }}</strong>
+
+      </div>
+
+      <div class="profile-field">
+
+        <span>Correo</span>
+        <strong>{{  currentUser?.correo  }}</strong>
+
+      </div>
+
+      <div class="profile-field">
+
+        <span>Rol</span>
+        <strong>{{  currentUser?.rolSistema  }}</strong>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="profile-card security-card">
+
+    <div>
+
+      <h2>Seguridad</h2>
+
+      <p>Actualiza la contraseña de tu cuenta</p>
+
+    </div>
+
+    <button type="button" class="primary-button" (click)="openPasswordModal()"> Cambiar la contraseña</button>
+
+  </section>
+
+  @if (isPasswordModalOpen) {
+
+    <div class="modal-overlay" (click)="closePasswordModal()">
+
+      <div class="password-modal" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+
+          <div>
+
+            <h2>Cambiar contraseña</h2>
+
+            <p>Ingresa tu contraseña actual y establece una nueva</p>
+
+          </div>
+
+          <button type="button" class="modal-close-button" (click)="closePasswordModal()">
+             ×
+          </button>
+
+        </div>
+
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+
+          <div class="form-group">
+
+            <label for="currentPassword">Contraseña actual</label>
+
+            <input id="currentPassword" type="password" formControlName="currentPassword" />
+
+            @if (passwordForm.controls.currentPassword.invalid && passwordForm.controls.currentPassword.touched) {
+
+              <small>
+                La contraseña actual es obligatoria
+              </small>
+
+            }
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="newPassword">
+              Nueva contraseña
+            </label>
+
+            <input id="newPassword" type="password" formControlName="newPassword" />
+
+
+            @if(passwordForm.controls.newPassword.invalid && passwordForm.controls.newPassword.touched){
+
+              <small>
+                La contraseña debe tener mínimo 9 caracteres,
+                una mayúscula, una minúscula, un número y un carácter especial.
+              </small>
+
+            }
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="confirmPassword">Confirmar nueva contraseña</label>
+
+            <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+
+            @if (passwordForm.controls.confirmPassword.hasError('passwordMismatch') && passwordForm.controls.confirmPassword.touched) {
+
+              <small>
+                Las contraseña no coinciden.
+              </small>
+
+            }
+
+          </div>
+
+          <div class="modal-footer">
+
+            <button type="button" class="secondary-button" (click)="closePasswordModal()">
+              Cancelar
+            </button>
+
+            <button type="submit" class="primary-button" [disabled]="passwordForm.invalid || isSubmitting">
+
+              @if (isSubmitting) {
+                Cambiando...
+              } @else {
+                Cambiar contraseña
+              }
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  }
+
+</section>

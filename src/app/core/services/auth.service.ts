@@ -80,4 +80,8 @@ export class AuthServiceTs {
     localStorage.removeItem('token');
   }
 
+  changePassword(data: {currentPassword: string; newPassword: string;}) {
+    return this.http.patch<{success: boolean; message: string;}>(`${environment.apiUrl}/change-password`, data);
+  }
+
 }

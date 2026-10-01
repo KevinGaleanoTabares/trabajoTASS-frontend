@@ -172,8 +172,19 @@
         <span class="detail-label">Fecha de detección</span>
 
         <span class="detail-value">
-          {{  selectedConflict.fechaDeteccion | date:'dd/MM/yyyy HH:mm'  }}
+          {{ selectedConflict.fechaDeteccion | date:'dd/MM/yyyy HH:mm' }}
         </span>
+
+        <span class="detail-label">Fecha de resolución</span>
+
+        <span class="detail-value">
+          @if (selectedConflict.fechaResolucion) {
+          {{ selectedConflict.fechaResolucion | date:'dd/MM/yyyy HH:mm' }}
+          } @else {
+          Aún no se ha resuelto el conflicto.
+          }
+        </span>
+
 
       </div>
 
@@ -223,6 +234,7 @@
               </span>
 
             </div>
+
 
             <div class="person-data">
 
@@ -293,6 +305,8 @@
 
               }
 
+
+
             </div>
 
           </div>
@@ -303,6 +317,22 @@
 
       </div>
 
+      @if (selectedConflict.estado === 'PENDIENTE') {
+
+          <label class="validate-checkbox">
+
+            <input
+              type="checkbox"
+              [disabled]="isResolving"
+              (change)="validateConflict()"
+            />
+
+            Validar conflicto
+
+          </label>
+
+        }
+
     </div>
 
     <div class="modal-footer">
@@ -310,6 +340,7 @@
       <button type="button" class="secondary-button" (click)="closeDetailModal()">
         Cerrar
       </button>
+
 
     </div>
 
@@ -319,4 +350,6 @@
 
 </div>
 }
+
+
 

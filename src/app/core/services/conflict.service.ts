@@ -31,4 +31,14 @@ export class ConflictService {
     this.apiUrl,
   );
 }
+
+  updateConflictStatus(id: string, estado: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/status`, { estado });
+  }
+
+  generateReport(formato: 'pdf' | 'excel'): Observable<Blob> {
+
+    return this.http.post(`${this.apiUrl}/report`, { formato }, { responseType:'blob' });
+  }
+
 }

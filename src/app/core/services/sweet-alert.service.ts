@@ -24,7 +24,7 @@ export class SweetAlertService {
     });
   }
 
-  warning(message: string): void {
+  warning(message: string) {
     Swal.fire({
       icon: 'warning',
       title: 'Cuenta no activada',

@@ -25,14 +25,7 @@ export class AdminHome implements OnInit {
   isLoadingConflicts = true;
   conflictsErrorMessage = '';
 
-  stats: DashboardStats = {
-    totalUsuarios: 0,
-    totalConflictos: 0,
-    conflictosAltoRiesgo: 0,
-    conflictosPendientes: 0,
-    tasaResolucion: 0,
-    tiempoPromedioResolucion: 0
-  };
+  stats: DashboardStats | null = null;
 
   isLoading = true;
   errorMessage = '';
@@ -59,6 +52,7 @@ export class AdminHome implements OnInit {
       error: (error) => {
         console.error('Error al cargar las estadísticas: ', error);
         this.errorMessage = 'No se pudieron cargar las estadísticas.';
+        this.isLoading = false;
 
       },
 

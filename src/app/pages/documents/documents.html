@@ -1,1 +1,62 @@
-<p>documents works!</p>
+<section class="documents-page">
+
+  <div class="documents-header">
+    <h1>Documentos</h1>
+    <p>Genera y descarga los reportes de conflictos.</p>
+  </div>
+
+  <div class="reports-container">
+
+    <div class="report-card">
+
+      <div class="report-icon">
+        📄
+      </div>
+
+      <div class="report-content">
+        <h2>Reporte PDF</h2>
+        <p>
+          Genera un reporte de los conflictos registrados
+          en formato PDF.
+        </p>
+
+        <button
+          type="button"
+          class="download-button"
+          (click)="generatePdf()"
+          [disabled]="isGenerating"
+        >
+          {{ isGenerating ? 'Generando...' : 'Descargar PDF' }}
+        </button>
+      </div>
+
+    </div>
+
+    <div class="report-card">
+
+      <div class="report-icon">
+        📊
+      </div>
+
+      <div class="report-content">
+        <h2>Reporte Excel</h2>
+        <p>
+          Genera un reporte de los conflictos registrados
+          en formato Excel.
+        </p>
+
+        <button
+          type="button"
+          class="download-button"
+          (click)="generateExcel()"
+          [disabled]="isGenerating"
+        >
+          {{ isGenerating ? 'Generando...' : 'Descargar Excel' }}
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

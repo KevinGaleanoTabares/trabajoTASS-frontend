@@ -3,7 +3,7 @@ import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AuthServiceTs } from '../../../core/services/auth.service';
 import { RouterLink } from '@angular/router';
-import { SweetAlertService } from '../../../core/services/sweet-alert-service';
+import { SweetAlertService } from '../../../core/services/sweet-alert.service';
 import { CompanyService } from '../../../core/services/company.service';
 import { cargos } from '../../../utils/cargos';
 @Component({

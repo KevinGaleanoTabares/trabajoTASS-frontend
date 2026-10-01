@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 
 import { AuthServiceTs } from '../../core/services/auth.service';
-import { SweetAlertService } from '../../core/services/sweet-alert-service';
+import { SweetAlertService } from '../../core/services/sweet-alert.service';
 
 import { Header } from '../../shared/components/header/header';
 import { Navbar, NavItem } from '../../shared/components/navbar/navbar';
@@ -50,7 +50,7 @@ export class Home {
         },
         {
           label: 'Dashboard',
-          route: '/',
+          route: '/home',
           icon: 'dashboard',
         },
         {
@@ -140,11 +140,11 @@ export class Home {
   }
 
   onLogout(): void {
+
     this.authService.logout();
-
     this.sweetAlert.success('Sesión cerrada correctamente');
-
     this.router.navigate(['/login']);
+
   }
 
   onNotificationClick(): void {

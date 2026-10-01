@@ -18,7 +18,7 @@ import { Empleados } from './pages/admin/empleados/empleados';
 import { Administrativos } from './pages/admin/administrativos/administrativos';
 import { Directivos } from './pages/admin/directivos/directivos';
 import { Proveedores } from './pages/admin/proveedores/proveedores';
-
+import { Profile } from './pages/profile/profile';
 
 export const routes: Routes = [
 
@@ -44,6 +44,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
 
     children: [
+
+      {
+        path: 'perfil',
+        component: Profile,
+        canActivate: [authGuard],
+      },
 
       {
         path: 'dashboard',

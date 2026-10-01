@@ -72,7 +72,7 @@ export interface FamilyRelationship {
     _id: string;
     nombres: string;
     apellidos: string;
-    tipoDocumento: string;
+    tipoDocumento: TipoDocumento;
     numeroDocumento: string;
     telefono: string;
     tipoVinculacion: string;
@@ -85,10 +85,20 @@ export interface FamilyRelationship {
   fechaConflicto?: string | null;
 }
 
+export type TipoDocumento = 'CC' | 'CE' | 'NIT' |  'PASAPORTE'
+
 export interface CreateFamilyRelationshipRequest {
-  tipoDocumento: string;
+  nombres: string;
+  apellidos: string;
+  tipoDocumento: TipoDocumento;
   numeroDocumento: string;
   parentesco: string;
+  tipoRelacion: string;
+  cargo: string;
+  telefono: string;
+  estado: string;
+  nombreEmpresa: string | null;
+  nitEmpresa: string | null;
 }
 
 export interface FamilyRelationshipsResponse {
@@ -107,10 +117,12 @@ export interface DashboardStats {
   totalConflictos: number,
   conflictosAltoRiesgo: number,
   conflictosPendientes: number,
+  conflictosResueltos: number;
   tasaResolucion: number,
+  estadoResolucion: string;
+  penalizacion: number;
   tiempoPromedioResolucion: number
 }
-
 export interface DashboardStatsResponse {
   success: boolean;
   data: DashboardStats;
@@ -150,6 +162,8 @@ export interface Conflict {
   coincidencias: string[];
   descripcion: string;
   involucrados: ConflictInvolved[];
+  fechaResolucion?: Date | null;
+
 }
 
 export interface ConflictsResponse {

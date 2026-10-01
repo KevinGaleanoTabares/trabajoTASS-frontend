@@ -3,7 +3,7 @@ import { RouterLink, Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthServiceTs } from '../../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SweetAlertService } from '../../../core/services/sweet-alert-service'
+import { SweetAlertService } from '../../../core/services/sweet-alert.service'
 
 @Component({
   selector: 'app-login',
@@ -47,17 +47,21 @@ export class Login {
       password: this.loginForm.getRawValue().password ?? '',
     }).subscribe({
       next: () => {
-        this.sweetAlert.success('Inicio de sesión exitoso');
+        this.sweetAlert.success('Inicio de sesión exitoso').then(() => {
 
-        const rol = this.authService.getRole();
+          const rol = this.authService.getRole();
 
-        if (rol === 'superAdmin') {
-          this.router.navigate(['/super-admin']);
-        } else if (rol === 'admin') {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/home']);
-        }
+          if (rol === 'superAdmin') {
+            this.router.navigate(['/super-admin']);
+          } else if (rol === 'admin') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+
+        });
+
+
       },
 
       error: (error: HttpErrorResponse) => {
