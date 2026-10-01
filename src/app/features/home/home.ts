@@ -53,11 +53,6 @@ export class Home {
           route: '/home',
           icon: 'dashboard',
         },
-        {
-          label: 'Familiares',
-          route: '/familiares',
-          icon: 'family',
-        },
       ];
 
       return;

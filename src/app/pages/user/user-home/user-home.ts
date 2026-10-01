@@ -36,7 +36,7 @@ export class UserHome implements OnInit {
     tipoRelacion: ['', Validators.required],
     cargo: ['', Validators.required],
     telefono: ['', Validators.required],
-    estado: ['ACTIVO', Validators.required],
+    // estado: ['ACTIVO', Validators.required],
     nombreEmpresa: [''],
     nitEmpresa: [''],
   });
@@ -100,7 +100,7 @@ export class UserHome implements OnInit {
       tipoRelacion: this.familyForm.value.tipoRelacion!,
       cargo: this.familyForm.value.cargo!,
       telefono: this.familyForm.value.telefono!,
-      estado: this.familyForm.value.estado!,
+      // estado: this.familyForm.value.estado!,
       nombreEmpresa: this.familyForm.value.nombreEmpresa ?? null,
       nitEmpresa: this.familyForm.value.nitEmpresa ?? null,
     };

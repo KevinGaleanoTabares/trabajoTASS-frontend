@@ -96,7 +96,7 @@ export interface CreateFamilyRelationshipRequest {
   tipoRelacion: string;
   cargo: string;
   telefono: string;
-  estado: string;
+  // estado: string;
   nombreEmpresa: string | null;
   nitEmpresa: string | null;
 }
