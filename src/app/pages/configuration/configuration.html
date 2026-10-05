@@ -1,1 +1,58 @@
-<p>configuration works!</p>
+<section class="configuration-page">
+	<header class="configuration-heading">
+		<div>
+			<h1>Configuración</h1>
+			<p>Cuenta, acceso y seguridad.</p>
+		</div>
+	</header>
+
+	<div class="configuration-grid">
+		<section class="configuration-section">
+			<div class="configuration-icon"><mat-icon aria-hidden="true">account_circle</mat-icon></div>
+			<div class="configuration-content">
+				<h2>Cuenta</h2>
+				<p class="configuration-description">Información de la sesión actual.</p>
+				<dl class="account-details">
+					<div><dt>Nombre</dt><dd>{{ currentUser?.nombres }} {{ currentUser?.apellidos }}</dd></div>
+					<div><dt>Correo</dt><dd>{{ currentUser?.correo }}</dd></div>
+					<div><dt>Rol</dt><dd>{{ currentUser?.rolSistema }}</dd></div>
+				</dl>
+				<a routerLink="/perfil" class="configuration-link">
+					<mat-icon aria-hidden="true">open_in_new</mat-icon>
+					Ver perfil
+				</a>
+			</div>
+		</section>
+
+		<section class="configuration-section">
+			<div class="configuration-icon"><mat-icon aria-hidden="true">lock</mat-icon></div>
+			<div class="configuration-content">
+				<h2>Seguridad</h2>
+				<p class="configuration-description">Actualiza la contraseña de acceso a tu cuenta.</p>
+				<a routerLink="/perfil" class="configuration-link">
+					<mat-icon aria-hidden="true">manage_accounts</mat-icon>
+					Ir a seguridad del perfil
+				</a>
+			</div>
+		</section>
+
+		<section class="configuration-section">
+			<div class="configuration-icon"><mat-icon aria-hidden="true">admin_panel_settings</mat-icon></div>
+			<div class="configuration-content">
+				<h2>Área administrativa</h2>
+				<p class="configuration-description">Abre el panel disponible para tu rol.</p>
+				@if (currentUser?.rolSistema === 'admin') {
+					<a routerLink="/admin" class="configuration-link">
+						<mat-icon aria-hidden="true">dashboard</mat-icon>
+						Panel de administración
+					</a>
+				} @else if (currentUser?.rolSistema === 'superAdmin') {
+					<a routerLink="/super-admin" class="configuration-link">
+						<mat-icon aria-hidden="true">dashboard</mat-icon>
+						Panel de super administración
+					</a>
+				}
+			</div>
+		</section>
+	</div>
+</section>

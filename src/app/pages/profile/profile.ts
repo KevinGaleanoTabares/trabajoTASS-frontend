@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { AuthServiceTs } from '../../core/services/auth.service';
 import { SweetAlertService } from '../../core/services/sweet-alert.service';
 import { Router } from '@angular/router';
@@ -22,7 +23,7 @@ const passwordMatchValidator: ValidatorFn = (
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule],
+  imports: [MatIconModule, ReactiveFormsModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -35,8 +36,12 @@ export class Profile {
 
   isPasswordModalOpen = false;
   isSubmitting = false;
+  currentPasswordVisible = false;
+  newPasswordVisible = false;
+  confirmPasswordVisible = false;
 
   currentUser = this.authService.getCurrentUser();
+  initials = this.getInitials();
 
   passwordForm = this.fb.nonNullable.group(
     {
@@ -69,7 +74,16 @@ export class Profile {
   closePasswordModal(): void {
     this.passwordForm.reset();
     this.isSubmitting = false;
+    this.currentPasswordVisible = false;
+    this.newPasswordVisible = false;
+    this.confirmPasswordVisible = false;
     this.isPasswordModalOpen = false;
+  }
+
+  private getInitials(): string {
+    const firstName = this.currentUser?.nombres.trim().charAt(0) ?? '';
+    const lastName = this.currentUser?.apellidos.trim().charAt(0) ?? '';
+    return `${firstName}${lastName}`.toLocaleUpperCase() || 'U';
   }
 
   changePassword(): void {

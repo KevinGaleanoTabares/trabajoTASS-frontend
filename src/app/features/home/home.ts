@@ -46,7 +46,7 @@ export class Home {
         {
           label: 'Mi perfil',
           route: '/perfil',
-          icon: 'profile',
+          icon: 'person',
         },
         {
           label: 'Dashboard',
@@ -64,7 +64,7 @@ export class Home {
         {
           label: 'Mi perfil',
           route: '/perfil',
-          icon: 'profile',
+          icon: 'person',
         },
         {
           label: 'Dashboard',
@@ -74,27 +74,27 @@ export class Home {
         {
           label: 'Empleados',
           route: 'admin/empleados',
-          icon: 'profile'
+          icon: 'groups'
         },
         {
           label: 'Administrativos',
           route: 'admin/administrativos',
-          icon: 'profile'
+          icon: 'manage_accounts'
         },
         {
           label: 'Directivos',
           route: '/admin/directivos',
-          icon: 'profile'
+          icon: 'supervisor_account'
         },
         {
           label: 'Proveedores',
           route: 'admin/proveedores',
-          icon: 'profile'
+          icon: 'storefront'
         },
         {
           label: 'Documentos',
           route: '/documentos',
-          icon: 'documents',
+          icon: 'description',
         },
         {
           label: 'Configuración',
@@ -112,7 +112,7 @@ export class Home {
         {
           label: 'Mi perfil',
           route: '/perfil',
-          icon: 'profile',
+          icon: 'person',
         },
         {
           label: 'Dashboard',
@@ -122,7 +122,7 @@ export class Home {
         {
           label: 'Documentos',
           route: '/documentos',
-          icon: 'documents',
+          icon: 'description',
         },
         {
           label: 'Configuración',

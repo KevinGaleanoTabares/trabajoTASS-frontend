@@ -203,6 +203,55 @@
   border-top: 1px solid var(--border-color, #e5e7eb);
 }
 
+.conflict-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.resolve-button,
+.reopen-button,
+.detail-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.resolve-button,
+.reopen-button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.resolve-button {
+  background: #168044;
+}
+
+.reopen-button {
+  background: #475569;
+}
+
+.resolve-button:disabled,
+.reopen-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.resolve-button mat-icon,
+.reopen-button mat-icon,
+.detail-button mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
 @media (max-width: 700px) {
 
   .modal-overlay {

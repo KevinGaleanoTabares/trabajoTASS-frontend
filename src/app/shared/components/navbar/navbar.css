@@ -35,22 +35,22 @@
   transition: all var(--transition-base);
 }
 
-.nav-item svg {
+.nav-item mat-icon {
   width: 20px;
   height: 20px;
-
   flex-shrink: 0;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  font-size: 20px;
 }
 
 .nav-item:hover {
   background: #f7fafc;
   color: var(--color-primary);
+}
+
+.nav-item:focus-visible,
+.logout-button:focus-visible {
+  outline: 3px solid rgba(4, 86, 244, 0.35);
+  outline-offset: 2px;
 }
 
 .nav-item.active {
@@ -84,15 +84,41 @@
   color: var(--color-primary);
 }
 
-.logout-button svg {
+.logout-button mat-icon {
   width: 20px;
   height: 20px;
-
   flex-shrink: 0;
+  font-size: 20px;
+}
 
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+@media (max-width: 760px) {
+  .sidebar {
+    width: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    flex-direction: row;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 8px 12px;
+    border-right: 0;
+    border-bottom: var(--border-width-thin) solid #e2e8f0;
+  }
+
+  .navigation {
+    width: max-content;
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .nav-item {
+    min-height: 40px;
+    white-space: nowrap;
+  }
+
+  .logout-button {
+    width: auto;
+    min-width: max-content;
+    min-height: 40px;
+    margin: 0 0 0 auto;
+  }
 }

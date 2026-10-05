@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface NavItem {
   label: string;
   route: string;
-  icon: 'profile' | 'dashboard' | 'family' | 'documents' | 'settings';
+  icon: string;
 }
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [MatIconModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

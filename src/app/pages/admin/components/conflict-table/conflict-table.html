@@ -102,7 +102,10 @@
           </td>
 
           <td>
-            <button type="button" class="detail-button" (click)="openDetailModal(conflict)"> Ver detalle </button>
+            <button type="button" class="detail-button" (click)="openDetailModal(conflict)">
+              <mat-icon aria-hidden="true">visibility</mat-icon>
+              Ver detalle
+            </button>
           </td>
         </tr>
         }
@@ -317,21 +320,22 @@
 
       </div>
 
-      @if (selectedConflict.estado === 'PENDIENTE') {
-
-          <label class="validate-checkbox">
-
-            <input
-              type="checkbox"
-              [disabled]="isResolving"
-              (change)="validateConflict()"
-            />
-
-            Validar conflicto
-
-          </label>
-
-        }
+      @if (selectedConflict.estado === 'PENDIENTE' || selectedConflict.estado === 'RESUELTO') {
+        <div class="conflict-actions">
+          <button type="button" class="resolve-button"
+            [disabled]="isUpdatingStatus || selectedConflict.estado !== 'PENDIENTE'"
+            (click)="changeConflictStatus('RESUELTO')">
+            <mat-icon aria-hidden="true">task_alt</mat-icon>
+            Resolver conflicto
+          </button>
+          <button type="button" class="reopen-button"
+            [disabled]="isUpdatingStatus || selectedConflict.estado !== 'RESUELTO'"
+            (click)="changeConflictStatus('PENDIENTE')">
+            <mat-icon aria-hidden="true">undo</mat-icon>
+            Devolver a Pendiente
+          </button>
+        </div>
+      }
 
     </div>
 

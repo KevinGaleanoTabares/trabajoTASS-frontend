@@ -2,7 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../enviroments/enviroment';
-import { DashboardStatsResponse, DetectConflictsResponse, ConflictsResponse } from '../../utils/interface_enums_types';
+import {
+  ConflictStatus,
+  DashboardStatsResponse,
+  DetectConflictsResponse,
+  ConflictsResponse,
+  UpdateConflictStatusResponse,
+} from '../../utils/interface_enums_types';
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +38,8 @@ export class ConflictService {
   );
 }
 
-  updateConflictStatus(id: string, estado: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/status`, { estado });
+  updateConflictStatus(id: string, estado: ConflictStatus): Observable<UpdateConflictStatusResponse> {
+    return this.http.put<UpdateConflictStatusResponse>(`${this.apiUrl}/${id}/status`, { estado });
   }
 
   generateReport(formato: 'pdf' | 'excel'): Observable<Blob> {

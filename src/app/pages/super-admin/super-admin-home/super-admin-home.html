@@ -1,6 +1,64 @@
-<section class="dashboard-heading">
-  <div>
-    <h1>Panel de super administración</h1>
-    <p>Administra la configuración global y los permisos del sistema.</p>
-  </div>
+<section class="super-admin-page">
+  <header class="super-admin-heading">
+    <div>
+      <h1>Administradores</h1>
+      <p>Cuentas con permisos administrativos en el sistema.</p>
+    </div>
+    <button type="button" class="refresh-button" (click)="loadAdministrators()" [disabled]="isLoading">
+      <mat-icon aria-hidden="true">refresh</mat-icon>
+      Actualizar
+    </button>
+  </header>
+
+  <section class="administrators-section" aria-labelledby="administrators-title">
+    <div class="section-heading">
+      <div>
+        <h2 id="administrators-title">Cuentas administrativas</h2>
+        <p>{{ administrators.length }} administradores</p>
+      </div>
+      <mat-icon aria-hidden="true">admin_panel_settings</mat-icon>
+    </div>
+
+    @if (isLoading) {
+      <p class="table-state" role="status">Cargando administradores...</p>
+    } @else if (errorMessage) {
+      <div class="table-state error-state" role="alert">
+        <p>{{ errorMessage }}</p>
+        <button type="button" (click)="loadAdministrators()">Reintentar</button>
+      </div>
+    } @else if (administrators.length === 0) {
+      <p class="table-state">No hay administradores registrados.</p>
+    } @else {
+      <div class="administrators-table-wrap">
+        <table class="administrators-table">
+          <thead>
+            <tr>
+              <th scope="col">Administrador</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Cargo</th>
+              <th scope="col">Vinculación</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (administrator of administrators; track administrator._id) {
+              <tr>
+                <td data-label="Administrador">
+                  <strong>{{ administrator.nombres }} {{ administrator.apellidos }}</strong>
+                </td>
+                <td data-label="Correo">{{ administrator.correo }}</td>
+                <td data-label="Cargo">{{ administrator.cargo }}</td>
+                <td data-label="Vinculación">{{ administrator.tipoVinculacion }}</td>
+                <td data-label="Estado">
+                  <span class="status-badge" [class.status-active]="administrator.estado === 'ACTIVO'">
+                    {{ administrator.estado }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
 </section>

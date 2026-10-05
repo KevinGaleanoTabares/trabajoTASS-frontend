@@ -1,13 +1,15 @@
 import { ChangeDetectorRef, Component, Input, OnInit, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { finalize } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 import { ConflictService } from '../../../../core/services/conflict.service';
 import { Conflict, Categoria } from '../../../../utils/interface_enums_types';
 import { SweetAlertService } from '../../../../core/services/sweet-alert.service';
 
 @Component({
   selector: 'app-conflict-table',
-  imports: [DatePipe, FormsModule],
+  imports: [DatePipe, FormsModule, MatIconModule],
   templateUrl: './conflict-table.html',
   styleUrl: './conflict-table.css',
 })
@@ -19,7 +21,7 @@ export class ConflictTable implements OnInit {
 
   selectedConflict: Conflict | null = null;
   showDetailModal = false;
-  isResolving = false;
+  isUpdatingStatus = false;
 
   isDetailModalOpen = false;
 
@@ -124,46 +126,46 @@ export class ConflictTable implements OnInit {
     this.selectedConflict = null;
   }
 
-  validateConflict(): void {
-
+  async changeConflictStatus(estado: 'RESUELTO' | 'PENDIENTE'): Promise<void> {
     if (!this.selectedConflict) {
       return;
     }
 
-    this.isResolving = true;
+    const message = estado === 'RESUELTO'
+      ? '¿Estás seguro que deseas resolver el conflicto?'
+      : '¿Estás seguro que deseas devolver el conflicto a Pendiente?';
+    const confirmation = await this.sweetAlert.confirm(message);
 
-    this.conflictService.updateConflictStatus(this.selectedConflict._id, 'RESUELTO').subscribe({
+    if (!confirmation.isConfirmed || !this.selectedConflict) {
+      return;
+    }
 
+    this.isUpdatingStatus = true;
+
+    this.conflictService.updateConflictStatus(this.selectedConflict._id, estado)
+      .pipe(finalize(() => {
+        this.isUpdatingStatus = false;
+      }))
+      .subscribe({
       next: (response) => {
-
         const updatedConflict = response.data;
-
-        // Actualizar el conflicto dentro de la tabla
-        this.conflicts = this.conflicts.map(conflict => conflict._id === updatedConflict._id ? updatedConflict : conflict);
-
-        // Volver a aplicar filtros
+        this.conflicts = this.conflicts.map(conflict =>
+          conflict._id === updatedConflict._id ? updatedConflict : conflict
+        );
         this.applyFilters();
-
-        // Actualizar el conflicto seleccionado
-        this.selectedConflict = updatedConflict
-
-        this.isResolving = false;
-
-        this.sweetAlert.success('El conflicto fue validado y resuelto correctamente.');
-
-        this.closeConflictDetail();
-
+        this.selectedConflict = updatedConflict;
+        this.sweetAlert.success(
+          estado === 'RESUELTO'
+            ? 'El conflicto fue resuelto correctamente.'
+            : 'El conflicto volvió al estado Pendiente.'
+        );
       },
-
       error: (error) => {
-
-        this.isResolving = false;
-
-        this.sweetAlert.error(error?.error?.message ?? 'No se pudo resolver el conflicto.');
+        this.sweetAlert.error(
+          error?.error?.message ?? 'No se pudo actualizar el estado del conflicto.'
+        );
       }
-
     });
-
   }
 
 }

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AuthServiceTs } from '../../../core/services/auth.service';
 import { RouterLink } from '@angular/router';
@@ -8,7 +9,7 @@ import { CompanyService } from '../../../core/services/company.service';
 import { cargos } from '../../../utils/cargos';
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [MatIconModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { finalize } from 'rxjs';
 import { ConflictService } from '../../core/services/conflict.service';
@@ -30,6 +31,10 @@ export class Documents {
       }))
       .subscribe({
         next: (blob) => {
+          if (!blob.size) {
+            this.sweetAlert.error('El PDF se recibió vacío. Intenta nuevamente.');
+            return;
+          }
           this.downloadFile(
             blob,
             'reporte-conflictos.pdf'
@@ -40,10 +45,8 @@ export class Documents {
           );
 
         },
-        error: () => {
-          this.sweetAlert.error(
-            'No se pudo generar el reporte PDF.'
-          );
+        error: (error: HttpErrorResponse) => {
+          void this.showReportError(error, 'No se pudo generar el reporte PDF.');
         }
       });
   }
@@ -60,6 +63,10 @@ export class Documents {
       }))
       .subscribe({
         next: (blob) => {
+          if (!blob.size) {
+            this.sweetAlert.error('El archivo Excel se recibió vacío. Intenta nuevamente.');
+            return;
+          }
           this.downloadFile(
             blob,
             'reporte-conflictos.xlsx'
@@ -69,10 +76,8 @@ export class Documents {
             'El reporte Excel fue generado correctamente.'
           );
         },
-        error: () => {
-          this.sweetAlert.error(
-            'No se pudo generar el reporte Excel.'
-          );
+        error: (error: HttpErrorResponse) => {
+          void this.showReportError(error, 'No se pudo generar el reporte Excel.');
         }
       });
   }
@@ -90,9 +95,37 @@ export class Documents {
     link.href = url;
     link.download = fileName;
 
+    document.body.appendChild(link);
     link.click();
+    link.remove();
 
-    window.URL.revokeObjectURL(url);
+    window.setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+  }
+
+  private async showReportError(error: HttpErrorResponse, fallback: string): Promise<void> {
+    const responseBody: unknown = error.error;
+    let message = fallback;
+
+    if (responseBody instanceof Blob) {
+      const text = await responseBody.text();
+      try {
+        const parsed = JSON.parse(text) as { message?: string };
+        message = parsed.message ?? message;
+      } catch {
+        if (text.trim()) {
+          message = text;
+        }
+      }
+    } else if (
+      typeof responseBody === 'object' &&
+      responseBody !== null &&
+      'message' in responseBody &&
+      typeof responseBody.message === 'string'
+    ) {
+      message = responseBody.message;
+    }
+
+    await this.sweetAlert.error(message);
   }
 
 }

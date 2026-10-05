@@ -17,11 +17,19 @@
 
     <div class="profile-card-header">
 
-      <div>
+      <div class="profile-heading">
+
+        <span class="profile-avatar" role="img" [attr.aria-label]="'Iniciales ' + initials">
+          {{ initials }}
+        </span>
+
+        <div>
 
         <h2>Información personal</h2>
 
         <p>Información asociada a tu cuenta</p>
+
+        </div>
 
       </div>
 
@@ -71,7 +79,9 @@
 
     </div>
 
-    <button type="button" class="primary-button" (click)="openPasswordModal()"> Cambiar la contraseña</button>
+    <button type="button" class="primary-button change-password-button" (click)="openPasswordModal()">
+      Cambiar contraseña
+    </button>
 
   </section>
 
@@ -103,7 +113,13 @@
 
             <label for="currentPassword">Contraseña actual</label>
 
-            <input id="currentPassword" type="password" formControlName="currentPassword" />
+            <div class="password-input">
+              <input id="currentPassword" [type]="currentPasswordVisible ? 'text' : 'password'" formControlName="currentPassword" />
+              <button type="button" class="password-toggle" (click)="currentPasswordVisible = !currentPasswordVisible"
+                [attr.aria-label]="currentPasswordVisible ? 'Ocultar contraseña actual' : 'Mostrar contraseña actual'">
+                <mat-icon aria-hidden="true">{{ currentPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
 
             @if (passwordForm.controls.currentPassword.invalid && passwordForm.controls.currentPassword.touched) {
 
@@ -121,7 +137,13 @@
               Nueva contraseña
             </label>
 
-            <input id="newPassword" type="password" formControlName="newPassword" />
+            <div class="password-input">
+              <input id="newPassword" [type]="newPasswordVisible ? 'text' : 'password'" formControlName="newPassword" />
+              <button type="button" class="password-toggle" (click)="newPasswordVisible = !newPasswordVisible"
+                [attr.aria-label]="newPasswordVisible ? 'Ocultar nueva contraseña' : 'Mostrar nueva contraseña'">
+                <mat-icon aria-hidden="true">{{ newPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
 
 
             @if(passwordForm.controls.newPassword.invalid && passwordForm.controls.newPassword.touched){
@@ -139,7 +161,13 @@
 
             <label for="confirmPassword">Confirmar nueva contraseña</label>
 
-            <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+            <div class="password-input">
+              <input id="confirmPassword" [type]="confirmPasswordVisible ? 'text' : 'password'" formControlName="confirmPassword" />
+              <button type="button" class="password-toggle" (click)="confirmPasswordVisible = !confirmPasswordVisible"
+                [attr.aria-label]="confirmPasswordVisible ? 'Ocultar confirmación de contraseña' : 'Mostrar confirmación de contraseña'">
+                <mat-icon aria-hidden="true">{{ confirmPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
 
             @if (passwordForm.controls.confirmPassword.hasError('passwordMismatch') && passwordForm.controls.confirmPassword.touched) {
 

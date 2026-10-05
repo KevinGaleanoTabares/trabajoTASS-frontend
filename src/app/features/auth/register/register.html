@@ -135,19 +135,7 @@
             />
             <button type="button" class="password-toggle" (click)="passwordVisible = !passwordVisible"
               [attr.aria-label]="passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'">
-              @if (passwordVisible) {
-              <!-- Ojo cerrado -->
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 4.2A10.8 10.8 0 0 1 12 4c5 0 9.3 3.1 11 8a11.8 11.8 0 0 1-3.1 4.8M6.2 6.2C4.7 7.5 3.5 9.4 3 12c1.7 4.9 6 8 9 8 1 0 2-.2 2.9-.5" />
-              </svg>
-              } @else {
-              <!-- Ojo abierto -->
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              }
+              <mat-icon aria-hidden="true">{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
           </div>
           @if (isInvalid('password')) {
@@ -170,19 +158,7 @@
             />
             <button type="button" class="password-toggle" (click)="confirmPasswordVisible = !confirmPasswordVisible"
               [attr.aria-label]="confirmPasswordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'">
-              @if (confirmPasswordVisible) {
-              <!-- Ojo cerrado -->
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 4.2A10.8 10.8 0 0 1 12 4c5 0 9.3 3.1 11 8a11.8 11.8 0 0 1-3.1 4.8M6.2 6.2C4.7 7.5 3.5 9.4 3 12c1.7 4.9 6 8 9 8 1 0 2-.2 2.9-.5" />
-              </svg>
-              } @else {
-              <!-- Ojo abierto -->
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              }
+              <mat-icon aria-hidden="true">{{ confirmPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
           </div>
 
@@ -207,4 +183,9 @@
       <a routerLink="/login"> Iniciar sesión </a>
     </p>
   </section>
+
+  <aside class="auth-brand-panel" aria-label="Identidad de TASS">
+    <img src="assets/images/logo-tass.png" alt="TASS Technology" />
+    <img class="brand-shield" src="assets/images/tass.png" alt="Escudo TASS" />
+  </aside>
 </main>

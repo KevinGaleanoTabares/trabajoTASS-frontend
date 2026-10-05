@@ -65,6 +65,21 @@ export interface AuthUser {
   estado: string;
 }
 
+export interface AdministratorSummary {
+  _id: string;
+  nombres: string;
+  apellidos: string;
+  correo: string;
+  tipoVinculacion: string;
+  cargo: string;
+  estado: string;
+}
+
+export interface AdministratorsResponse {
+  success: boolean;
+  data: AdministratorSummary[];
+}
+
 export interface FamilyRelationship {
   _id: string;
   usuario: string;
@@ -164,6 +179,14 @@ export interface Conflict {
   involucrados: ConflictInvolved[];
   fechaResolucion?: Date | null;
 
+}
+
+export type ConflictStatus = Conflict['estado'];
+
+export interface UpdateConflictStatusResponse {
+  success: boolean;
+  message: string;
+  data: Conflict;
 }
 
 export interface ConflictsResponse {
