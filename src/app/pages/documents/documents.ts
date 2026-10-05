@@ -26,6 +26,7 @@ export class Documents {
     this.conflictService.generateReport('pdf')
       .pipe(finalize(() => {
         this.isGenerating = false;
+        this.changeDetector.markForCheck();
       }))
       .subscribe({
         next: (blob) => {
@@ -38,19 +39,13 @@ export class Documents {
             'El reporte PDF fue generado correctamente.'
           );
 
-          this.changeDetector.markForCheck();
-
         },
         error: () => {
           this.sweetAlert.error(
             'No se pudo generar el reporte PDF.'
           );
-        }, complete: () => this.changeDetector.markForCheck()
-      }).add(() => {
-
-      this.changeDetector.markForCheck();
-
-    });;
+        }
+      });
   }
 
 
@@ -61,6 +56,7 @@ export class Documents {
     this.conflictService.generateReport('excel')
       .pipe(finalize(() => {
         this.isGenerating = false;
+        this.changeDetector.markForCheck();
       }))
       .subscribe({
         next: (blob) => {
